@@ -3,7 +3,6 @@ Thumbs.db
 db.json
 *.log
 node_modules/
-public/
 .deploy*/
-hexo/
-!./hexo/public/
+hexo/*
+!hexo/public/
