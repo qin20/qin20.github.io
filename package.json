@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/qinyuanbin/qinyuanbin.github.io/issues"
   },
-  "homepage": "https://github.com/qinyuanbin/qinyuanbin.github.io#readme"
+  "homepage": "https://github.com/qinyuanbin/qinyuanbin.github.io#readme",
+  "dependencies": {
+    "reveal": "0.0.4"
+  }
 }
