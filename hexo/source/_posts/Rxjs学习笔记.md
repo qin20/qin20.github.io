@@ -1,0 +1,102 @@
+---
+title: Rxjs学习笔记
+date: 2017-11-15 22:56:36
+categories:
+    - CSS
+tags:
+    - gulp
+    - 雪碧图
+    - spritesmith
+---
+
+在多页面开发过程中，经常涉及到雪碧图的合成，人工合成雪碧图不仅繁琐而且难以维护，下面介绍使用`gulp`和`less`实现自定义生成雪碧图的实现思路。
+
+#### 需求
+自动根据图片的名称生成相应的class`sprite-img-name`，在html中可以直接引用。
+例如，对于名称为`banner_logo`的图片，在html中这样写：
+
+```HTML
+<span class="sprite-banner-logo"></span>
+```
+程序会根据图片的大小，和在雪碧图的位置自动写在生成的class`sprite-banner-logo`里面，开发过程中不用关系图片的大小和`background-position`，只需要在html写对class，就可以直接用图片啦。并且定下css命名规则为`dasherize`。超级方便，从此告别手动ps雪碧图和恶心的调整`background-position`。
+
+#### 实现
+多个页面的雪碧图分开生成的完整代码如下
+
+`gulp-task-spritesmith.js`:
+```js
+var gulp = require('gulp');
+var gutil = require('gulp-util');
+var spritesmith = require('gulp.spritesmith');
+var buffer = require('vinyl-buffer');
+var imagemin = require('gulp-imagemin');
+var merge2 = require('merge2');
+var dasherize = require("underscore.string/dasherize");
+
+var basePath = '../static/'; // 静态目录路径
+var sprites = [{ // 多页面雪碧图生成配置
+    name: 'home',
+    src: 'img/home/*.{png,jpg}'
+},{
+    name: 'about',
+    src: 'img/about/*.{png,jpg}'
+}];
+
+// 这里是打包代码
+function buildSprite(config, next) {
+    if (!config.src) {
+        gutil.log(gutil.colors.red(`错误：雪碧图打包配置${config.name}没有配置src`));
+        return;
+    }
+
+    var config = Object.assign({
+        padding: 2,
+        cssFormat: 'css',
+        imgName: `sprite_${config.name || config.index}.png`,
+        imgDest: 'project/img/sprite',
+        cssName: `_sprite_${config.name || config.index}.less`,
+        cssDest: 'project/css/module/sprite',
+        imgPath: `/static/project/img/sprite/sprite_${config.name || config.index}.png`,
+        cssOpts: {
+            cssSelector: function(sprite) {
+                return '.sprite-' + dasherize(sprite.name);
+            }
+        }
+    }, config);
+
+    var spriteData = gulp.src(basePath + config.src)
+        .pipe(spritesmith(config));
+
+    var imgStream = spriteData.img
+        .pipe(buffer())
+        .pipe(imagemin())
+        .pipe(gulp.dest(basePath + config.imgDest));
+
+    var cssStream = spriteData.css
+        .pipe(gulp.dest(basePath + config.cssDest));
+
+    return merge2(imgStream, cssStream);
+}
+
+module.exports = function(cb) {
+    var i = 0;
+
+    (function run() {
+        var config = sprites[i++];
+
+        if (config) {
+            buildSprite(config).on('end', run).resume();
+        } else {
+            cb();
+        }
+    })();
+};
+```
+
+`gulpfile.js`:
+```js
+var gulp = require('gulp');
+var spritesTask = require('./gulp-task-spritesmith');
+
+gulp.task('sprites', spritesTask);
+```

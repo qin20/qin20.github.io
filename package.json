@@ -1,0 +1,25 @@
+{
+  "name": "qinyuanbin.github.io",
+  "version": "1.0.0",
+  "description": "qinyuanbin's personal blog",
+  "main": "index.html",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qinyuanbin/qinyuanbin.github.io.git"
+  },
+  "keywords": [
+    "blog",
+    "hexo",
+    "qinyuanbin",
+    "mainpage"
+  ],
+  "author": "qinyuanbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qinyuanbin/qinyuanbin.github.io/issues"
+  },
+  "homepage": "https://github.com/qinyuanbin/qinyuanbin.github.io#readme"
+}
