@@ -15,7 +15,7 @@
         <div class="slides">
             <section>
                 <h1>qyb's sharing</h1>
-                <h3>in react learning</h3>
+                <h3>react + react-router + redux</h3>
                 <p>
                     <small>Created by 
                     <a href="http://qinyuanbin@github.io">秦二十</a> and 
@@ -24,358 +24,346 @@
             </section>
 
             <section>
-                <h2>Hello There</h2>
-                <p>
-                    reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-                </p>
-            </section>
-
-            <!-- Example of nested vertical slides -->
-            <section>
                 <section>
-                    <h2>Vertical Slides</h2>
-                    <p>Slides can be nested inside of each other.</p>
-                    <p>Use the <em>Space</em> key to navigate through all slides.</p>
-                    <br>
-                    <a href="#" class="navigate-down">
-                        <img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-                    </a>
+                    <h2>react</h2>
+                    <ul>
+                        <li>
+                            <p>JXS简介</p>
+                            <small>一种 JavaScript 的语法扩展。 我们推荐在 React 中使用 JSX 来描述用户界面。JSX 乍看起来可能比较像是模版语言，但事实上它完全是在 JavaScript 内部实现的。</small>
+                        </li>
+                        <li>
+                            <p>REACT</p>
+                            <small>props、state、life circle</small>
+                        </li>
+                    </ul>
                 </section>
                 <section>
-                    <h2>Basement Level 1</h2>
-                    <p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
-                </section>
-                <section>
-                    <h2>Basement Level 2</h2>
-                    <p>That's it, time to go back up.</p>
-                    <br>
-                    <a href="#/2">
-                        <img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-                    </a>
-                </section>
-            </section>
-
-            <section>
-                <h2>Slides</h2>
-                <p>
-                    Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="https://slides.com" target="_blank">https://slides.com</a>.
-                </p>
-            </section>
-
-            <section>
-                <h2>Point of View</h2>
-                <p>
-                    Press <strong>ESC</strong> to enter the slide overview.
-                </p>
-                <p>
-                    Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-                </p>
-            </section>
-
-            <section>
-                <h2>Touch Optimized</h2>
-                <p>
-                    Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
-                </p>
-            </section>
-
-            <section data-markdown>
-                <script type="text/template">
-                    ## Markdown support
-
-                    Write content using inline or external Markdown.
-                    Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-
-                    ```
-                    <section data-markdown>
-                        ## Markdown support
-
-                        Write content using inline or external Markdown.
-                        Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-                    </section>
-                    ```
-                </script>
-            </section>
-
-            <section>
-                <section id="fragments">
-                    <h2>Fragments</h2>
-                    <p>Hit the next arrow...</p>
-                    <p class="fragment">... to step through ...</p>
-                    <p><span class="fragment">... a</span> <span class="fragment">fragmented</span> <span class="fragment">slide.</span></p>
+                    <p>jsx用法及原理</p>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        var title = <h1>Hi, there!</h1>;
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        var userName = 'xiaoming';
+                        var title = <h1>Hi, {userName}</h1>;
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        function formatName (name) {
+                            return 'handsome ' + name;
+                        }
+                        var title = <h1>Hi, {formatName('xiaoming')}</h1>;
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        var names = ['Alice', 'Emily', 'Kate'];
+                        var list = (
+                            <div>
+                                { names.map(function (name, index) {
+                                    return <div key={index}>Hello, {name}!</div>
+                                })}
+                            </div>
+                        );
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        // react报错, 一个jsx只能有一个顶级元素
+                        var ps = <p>1111</p><p>2222</p>;
+                    </code></pre>
 
                     <aside class="notes">
-                        This slide has fragments which are also stepped through in the notes window.
+                        <p>1. jsx支持内嵌变量和表达式，必须使用中括号，切勿使用标签<sayHi></sayHi>的形式，使用标签会被认为是一个component而不是jsx对象</p>
+                        <p>2. 一个jsx必须只能有一个根元素</p>
+                        <p>3. jsx会在render的时候转成字符串</p>
                     </aside>
                 </section>
                 <section>
-                    <h2>Fragment Styles</h2>
-                    <p>There's different types of fragments, like:</p>
-                    <p class="fragment grow">grow</p>
-                    <p class="fragment shrink">shrink</p>
-                    <p class="fragment fade-out">fade-out</p>
-                    <p class="fragment fade-up">fade-up (also down, left and right!)</p>
-                    <p class="fragment current-visible">current-visible</p>
-                    <p>Highlight <span class="fragment highlight-red">red</span> <span class="fragment highlight-blue">blue</span> <span class="fragment highlight-green">green</span></p>
+                    <p>jsx对象结构</p>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        // jsx在React内部使用React.createElement创建，是一个React.Element对象
+                        React.createElement(component, props, ...children)
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        var names = ['Alice', 'Emily', 'Kate'];
+                        var list = (
+                            <div>
+                                { names.map(function (name, index) {
+                                    return <div key={index}>Hello, {name}!</div>
+                                })}
+                            </div>
+                        );
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        {"type": "div", "key": null, "ref": null, "props": {
+                            "children": [
+                                {"type": "div", "key": "0", "ref": null, "props": {
+                                    "children": ["Hello, ", "Alice", "!"]
+                                }, "_owner": null, "_store": {}},
+                                ...
+                            ]
+                        }, "_owner": null, "_store": {}}
+                    </code></pre>
                 </section>
-            </section>
-
-            <section id="transitions">
-                <h2>Transition Styles</h2>
-                <p>
-                    You can select from different transitions, like: <br>
-                    <a href="?transition=none#/transitions">None</a> -
-                    <a href="?transition=fade#/transitions">Fade</a> -
-                    <a href="?transition=slide#/transitions">Slide</a> -
-                    <a href="?transition=convex#/transitions">Convex</a> -
-                    <a href="?transition=concave#/transitions">Concave</a> -
-                    <a href="?transition=zoom#/transitions">Zoom</a>
-                </p>
-            </section>
-
-            <section id="themes">
-                <h2>Themes</h2>
-                <p>
-                    reveal.js comes with a few themes built in: <br>
-                    <!-- Hacks to swap themes after the page has loaded. Not flexible and only intended for the reveal.js demo deck. -->
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/black.css'); return false;">Black (default)</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/white.css'); return false;">White</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/league.css'); return false;">League</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/sky.css'); return false;">Sky</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/beige.css'); return false;">Beige</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/simple.css'); return false;">Simple</a> <br>
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/serif.css'); return false;">Serif</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/blood.css'); return false;">Blood</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/night.css'); return false;">Night</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/moon.css'); return false;">Moon</a> -
-                    <a href="#" onclick="document.getElementById('theme').setAttribute('href','css/theme/solarized.css'); return false;">Solarized</a>
-                </p>
-            </section>
-
-            <section>
-                <section data-background="#dddddd">
-                    <h2>Slide Backgrounds</h2>
-                    <p>
-                        Set <code>data-background="#dddddd"</code> on a slide to change the background color. All CSS color formats are supported.
-                    </p>
-                    <a href="#" class="navigate-down">
-                        <img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-                    </a>
+                <section>
+                    <p>jsx使用</p>
+                    <pre><code class="hljs" data-trim>
+                        // 放在ReactDOM.render里面渲染到DOM里面的时候，会被转成字符串
+                        ReactDOM.render(
+                            <h1>Hello, world!</h1>,
+                            document.body
+                        );
+                    </code></pre>
                 </section>
-                <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
-                    <h2>Image Backgrounds</h2>
-                    <pre><code class="hljs">&lt;section data-background="image.png"&gt;</code></pre>
+                <section>
+                    <h2>React原理</h2>
+                    <p><span class="fragment">虚拟DOM</span><span class="fragment"> => DIFF</span><span class="fragment"> => DOM</span></p>
+
+                    <aside class="notes">
+                        <p>1. 我们只用关心如何使用和操作虚拟DOM，后面两个步骤不需要关心，也可以，但是建议了解和研究</p>
+                    </aside>
                 </section>
-                <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
-                    <h2>Tiled Backgrounds</h2>
-                    <pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-                </section>
-                <section data-background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm" data-background-color="#000000">
-                    <div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
-                        <h2>Video Backgrounds</h2>
-                        <pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-video="video.mp4,video.webm"&gt;</code></pre>
-                    </div>
-                </section>
-                <section data-background="http://i.giphy.com/90F8aUepslB84.gif">
-                    <h2>... and GIFs!</h2>
-                </section>
-            </section>
-
-            <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-                <h2>Background Transitions</h2>
-                <p>
-                    Different background transitions are available via the backgroundTransition option. This one's called "zoom".
-                </p>
-                <pre><code class="hljs">Reveal.configure({ backgroundTransition: 'zoom' })</code></pre>
-            </section>
-
-            <section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
-                <h2>Background Transitions</h2>
-                <p>
-                    You can override background transitions per-slide.
-                </p>
-                <pre><code class="hljs" style="word-wrap: break-word;">&lt;section data-background-transition="zoom"&gt;</code></pre>
-            </section>
-
-            <section>
-                <h2>Pretty Code</h2>
-                <pre><code class="hljs" data-trim contenteditable>
-                    function linkify( selector ) {
-                        if( supports3DTransforms ) {
-
-                            var nodes = document.querySelectorAll( selector );
-
-                            for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-                            var node = nodes[i];
-
-                            if( !node.className ) {
-                                node.className += ' roll';
-                            }
+                <section>
+                    <h2>如何创建一个React.Component</h2>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        // 函数
+                        function Hello(props) {
+                            return <h1>Hello, {props.name}!</h1>;
+                        }
+                        // Error，类名首字母大写
+                        function hello(props) {
+                            return <h1>Hello, {props.name}!</h1>;
+                        }
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs" data-trim>
+                        // ES6写一个组件类
+                        class Hello extends React.Component {
+                            render() {
+                                return <h1>Hello, {this.props.name}!</h1>;
                             }
                         }
-                    }
-                </code></pre>
-                <p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+
+                        ReactDOM.render(
+                            <Hello name="xiaoming"></Hello>,
+                            document.body
+                        )
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>组件的属性和状态</h2>
+                    <p>1. 属性（props）是外部传入，内部不可以修改，内部只能读取</p>
+                    <p>2. 状态（states）只可以内部修改，外部无法修改</p>
+
+                    <aside class="notes">
+                        <p>1. 官方解释state是可变，props是不可变</p>
+                        <p>2. this.props.children</p>
+                        <p>3. this.refs.xxx 引用真实的DOM</p>
+                    </aside>
+                </section>
+                <section>
+                    <h2>组件的生命周期</h2>
+                    <p>
+                        <img src="../img/react-life-circle.png" alt="react生命周期">
+                    </p>
+                </section>
             </section>
 
             <section>
-                <h2>Marvelous List</h2>
-                <ul>
-                    <li>No order here</li>
-                    <li>Or here</li>
-                    <li>Or here</li>
-                    <li>Or here</li>
-                </ul>
+                <section>
+                    <h2>React Router</h2>
+                    <p class="fragment">什么是路由（Route）？</p>
+                    <p class="fragment">后端路由：对应一定的处理逻辑，最终返回数据</p>
+                    <p class="fragment">前端路由：拿到后端的数据，渲染成页面。路由对应一个页面</p>
+                    <p class="fragment">结论：Route定义了url和组件的对应关系</p>
+                </section>
+
+                <section style="font-size: 32px;">
+                    <h2>一、基本用法</h2>
+                    <pre class="fragment"><xmp>
+                        <Router history={hashHistory}>
+                            <Route path="/" component={Index}></Route>
+                            <Route path="/about" component={About}></Route>
+                            <Route path="/reg" component={Registration}></Route>
+                        </Router>
+                    </xmp></pre>
+                    <pre class="fragment"><xmp>
+                        <ul role="nav">
+                            <li><Link to="/">首页</Link></li>
+                            <li><Link to="/about">关于我们</Link></li>
+                            <li><Link to="/reg">注册</Link></li>
+                        </ul>
+                    </xmp></pre>
+                    <pre class="fragment"><xmp>
+                        import { browserHistory } from 'react-router'
+    
+                        // ...
+                            handleSubmit() {
+                                browserHistory.push(path)
+                            },
+                    </xmp></pre>
+                    <pre class="fragment"><xmp>
+                        import { browserHistory } from 'react-router'
+    
+                        // ...
+                            handleSubmit() {
+                                this.context.router.push(path)
+                            },
+                    </xmp></pre>
+                </section>
+    
+                <section>
+                    <h2>二、嵌套路由</h2>
+                    <pre class="fragment"><xmp>
+                        <Router history={hashHistory}>
+                            <Route path="/" component={App}>
+                                <Route path="/about" component={About}></Route>
+                                <Route path="/reg" component={Registration}></Route>
+                            </Route>
+                        </Router>
+                    </xmp></pre>
+                </section>
+                
+                <section style="font-size: 35px;">
+                    <h2>三、自定义url和通配符</h2>
+                    <small style="color: red;">一个url只会匹配一个路由，如果有多个，以匹配到的第一个路由为准</small>
+                    <pre class="fragment"><xmp>
+                        <Route path="/hello/:name"></Route>
+                        // 匹配 /hello/michael
+                        // 匹配 /hello/ryan
+                        <Route path="/hello(/:name)"></Route>
+                        // 匹配 /hello
+                        // 匹配 /hello/michael
+                        // 匹配 /hello/ryan
+                        <Route path="/files/*.*"></Route>
+                        // 匹配 /files/hello.jpg
+                        // 匹配 /files/hello.html
+                        <Route path="/files/*"></Route>
+                        // 匹配 /files/ 
+                        // 匹配 /files/a
+                        // 匹配 /files/a/b
+                        <Route path="/**/*.jpg"></Route>
+                        // 匹配 /files/hello.jpg
+                        // 匹配 /files/path/to/file.jpg
+                    </xmp></pre>
+    
+                    <aside class="notes" style="font-size: 16px;">
+                        <div style="font-size: 14px;">
+                            <div>（1）:paramName</div>
+                            <div>:paramName匹配URL的一个部分，直到遇到下一个/、?、#为止。这个路径参数可以通过this.props.params.paramName取出。</div>
+                            <div>（2）()</div>
+                            <div>()表示URL的这个部分是可选的。</div>
+                            <div>（3）*</div>
+                            <div>*匹配任意字符，直到模式里面的下一个字符为止。匹配方式是非贪婪模式。</div>
+                            <div>（4） **</div>
+                            <div> ** 匹配任意字符，直到下一个/、?、#为止。匹配方式是贪婪模式。</div>
+                        </div>
+                    </aside>
+                </section>  
+    
+                <section>
+                    <h2>路由器的权限判断</h2>
+                    <pre><xmp>
+                        const AuthRoute = ({ component: Component, ...rest }) => (
+                            <Route {...rest} render={props => (
+                                bms.isAuthenticated ? (
+                                    <Component {...props}></Component>
+                                ) : (
+                                    <Redirect to={{
+                                        pathname: '/login',
+                                        state: { from: props.location }
+                                    }}></Redirect>
+                                )
+                            )}></Route>
+                        )
+                    </xmp></pre>
+                </section>
+    
+                <section>
+                    <h2>其他</h2>
+                    <ul>
+                        <li>Switch</li>
+                        <li>CSSTransitionGroup</li>
+                    </ul>
+                </section>
             </section>
 
             <section>
-                <h2>Fantastic Ordered List</h2>
-                <ol>
-                    <li>One is smaller than...</li>
-                    <li>Two is smaller than...</li>
-                    <li>Three!</li>
-                </ol>
+                <section>
+                    <h2>Redux</h2>
+                    
+                    <ul class="fragment">
+                        <li>State</li>
+                        <small class="fragment">
+                            一组不可变的数据，保存整个项目的各种状态信息，比如：isAuthenticated、username、rolename、email等
+                            对象如果要发生改变，都会产生一个新的对象，所以会有 prevState, currentState, nextState ...
+                        </small>
+                        <li>Store</li>
+                        <small class="fragment">
+                            管理state的工具，获取state，更新state等等，正常来说一个项目只有一个
+                        </small>
+                        <li>Action</li>
+                        <small class="fragment">
+                            一个对象，可以被store识别，一种改变state的请求，这个对象包含两种东西，携带了新的state数据和一个type字段做id
+                        </small>
+                        <li>Reducers</li>
+                        <small class="fragment">
+                            一个<span style="color: red;">纯函数</span> ，处理各种action，两个参数：当前state和action，根据每一个action的type，整合每一个action的数据，生成一个全新的state
+                            为什么叫reducers，参考Array.prototype.reduce函数，设计成这样的目的：代码拆分
+                        </small>
+                    </ul>
+
+                    <aside class="notes">
+                        <div class="custom-notes-css">
+                            <ul>
+                                <li><p>redux是什么</p></li>
+                                <li><p>redux有什么用</p></li>
+                                <li><p>redux怎么用</p></li>
+                                <li>
+                                    <p>纯函数</p>
+                                    <ul>
+                                        <li>不得改写参数</li>
+                                        <li>不能调用系统 I/O 的API</li>
+                                        <li>不能调用Date.now()或者Math.random()等不纯的方法，因为每次会得到不一样的结果</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </aside>
+                </section>
             </section>
-
-            <section>
-                <h2>Tabular Tables</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Value</th>
-                            <th>Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Apples</td>
-                            <td>$1</td>
-                            <td>7</td>
-                        </tr>
-                        <tr>
-                            <td>Lemonade</td>
-                            <td>$2</td>
-                            <td>18</td>
-                        </tr>
-                        <tr>
-                            <td>Bread</td>
-                            <td>$3</td>
-                            <td>2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section>
-                <h2>Clever Quotes</h2>
-                <p>
-                    These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">The nice thing about standards is that there are so many to choose from</q> and block:
-                </p>
-                <blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-                    &ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
-                    reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
-                </blockquote>
-            </section>
-
-            <section>
-                <h2>Intergalactic Interconnections</h2>
-                <p>
-                    You can link between slides internally,
-                    <a href="#/2/3">like this</a>.
-                </p>
-            </section>
-
-            <section>
-                <h2>Speaker View</h2>
-                <p>There's a <a href="https://github.com/hakimel/reveal.js#speaker-notes">speaker view</a>. It includes a timer, preview of the upcoming slide as well as your speaker notes.</p>
-                <p>Press the <em>S</em> key to try it out.</p>
-
-                <aside class="notes">
-                    Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-                </aside>
-            </section>
-
-            <section>
-                <h2>Export to PDF</h2>
-                <p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, here's an example:</p>
-                <iframe data-src="https://www.slideshare.net/slideshow/embed_code/42840540" width="445" height="355" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:3px solid #666; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe>
-            </section>
-
-            <section>
-                <h2>Global State</h2>
-                <p>
-                    Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-                    will be added as a class to the document element when the slide is open. This lets you
-                    apply broader style changes, like switching the page background.
-                </p>
-            </section>
-
-            <section data-state="customevent">
-                <h2>State Events</h2>
-                <p>
-                    Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-                </p>
-                <pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
-                    Reveal.addEventListener( 'customevent', function() {
-                        console.log( '"customevent" has fired' );
-                    } );
-                </code></pre>
-            </section>
-
-            <section>
-                <h2>Take a Moment</h2>
-                <p>
-                    Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
-                </p>
-            </section>
-
-            <section>
-                <h2>Much more</h2>
-                <ul>
-                    <li>Right-to-left support</li>
-                    <li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
-                    <li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
-                    <li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
-                    <li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
-                </ul>
-            </section>
-
-            <section style="text-align: left;">
-                <h1>THE END</h1>
-                <p>
-                    - <a href="https://slides.com">Try the online editor</a> <br>
-                    - <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
-                </p>
-            </section>
-
         </div>
-
     </div>
+    <script>
+        // <xmp>标签下的代码去空格
+        Array.prototype.slice.call(document.getElementsByTagName('xmp')).forEach(function(xmp) {
+            var text = xmp.innerText.split('\n').filter(function(line) {
+                return !!line;
+            });
+            var spaceLength = text[0].match(/^\s+/)[0].length;
+            var regexp = new RegExp('^\\s{' + spaceLength + '}')
+            
+            xmp.innerText = text.map(function(line) {
+                return line.replace(regexp, '');
+            }).join('\n');
+        });
+    </script>
     <script src="../lib/revealjs/lib/js/head.min.js"></script>
     <script src="../lib/revealjs/js/reveal.js"></script>
     <script>
         var revealPath = '../lib/revealjs/';
 
         Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
-
-				transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: revealPath + 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: revealPath + 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: revealPath + 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: revealPath + 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: revealPath + 'plugin/search/search.js', async: true },
-					{ src: revealPath + 'plugin/zoom-js/zoom.js', async: true },
-					{ src: revealPath + 'plugin/notes/notes.js', async: true }
-				]
-			});
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+            // More info https://github.com/hakimel/reveal.js#dependencies
+            dependencies: [
+                { src: revealPath + 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: revealPath + 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: revealPath + 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                { src: revealPath + 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: revealPath + 'plugin/search/search.js', async: true },
+                { src: revealPath + 'plugin/zoom-js/zoom.js', async: true },
+                { src: revealPath + 'plugin/notes/notes.js', async: true }
+            ]
+        });
     </script>
 </body>
 </html>
