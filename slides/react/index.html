@@ -7,6 +7,20 @@
     <title>Document</title>
     <link rel="stylesheet" href="../lib/revealjs/css/reveal.css">
     <link rel="stylesheet" href="../lib/revealjs/css/theme/moon.css">
+    <style>
+        .flex-hor {
+            display: flex;
+        }
+
+        .flex-hor > * {
+            flex: 1;
+        }
+
+        .flex-hor img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
     <div class="reveal">
@@ -158,7 +172,7 @@
                 <section>
                     <h2>组件的生命周期</h2>
                     <p>
-                        <img src="../img/react-life-circle.png" alt="react生命周期">
+                        <img src="./img/react-life-circle.png" alt="react生命周期">
                     </p>
                 </section>
             </section>
@@ -298,7 +312,7 @@
                         </small>
                         <li>Action</li>
                         <small class="fragment">
-                            一个对象，可以被store识别，一种改变state的请求，这个对象包含两种东西，携带了新的state数据和一个type字段做id
+                            一个对象，可以被store识别，一种改变state的请求，这个对象包含两种东西，携带了新的state数据和一个type字段做
                         </small>
                         <li>Reducers</li>
                         <small class="fragment">
@@ -324,6 +338,64 @@
                             </ul>
                         </div>
                     </aside>
+                </section>
+                
+                <section>
+                    <h2>react-redux库</h2>
+                    <div class="flex-hor">
+                        <div><img src="./img/redux-flow.jpg"></div>
+                        <div><img src="./img/redux.png"></div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>容器组件和ui组件</h2>
+                    <ul>
+                        <li>
+                            <p>容器组件</p>
+                            <ul>
+                                <li>负责管理数据和业务逻辑，不负责 UI 的呈现</li>
+                                <li>带有内部状态</li>
+                                <li>使用 Redux 的 API</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <p>UI组件</p>
+                            <ul>
+                                <li>只负责 UI 的呈现，不带有任何业务逻辑</li>
+                                <li>没有状态（即不使用this.state这个变量）</li>
+                                <li>所有数据都由参数（this.props）提供</li>
+                                <li>不使用任何 Redux 的 API</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Connect()</h2>
+                    <pre><xmp>
+                        import { connect } from 'react-redux'
+
+                        const VisibleTodoList = connect(
+                            mapStateToProps,
+                            mapDispatchToProps
+                        )(TodoList)
+                    </xmp></pre>
+                    <pre><xmp>
+                        import { Provider } from 'react-redux'
+                        import { createStore } from 'redux'
+                        import todoApp from './reducers'
+                        import App from './components/App'
+                        
+                        let store = createStore(todoApp);
+                        
+                        render(
+                            <Provider store={store}>
+                            <App />
+                            </Provider>,
+                            document.getElementById('root')
+                        )
+                    </xmp></pre>
                 </section>
             </section>
         </div>
