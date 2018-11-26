@@ -3,9 +3,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <title>个人主页 __ qinyuanbin </title>
+
+    <link rel="stylesheet" href="/assets/typo.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f7f7f7;
+            padding-top: 150px;
+        }
+
+        section {
+            min-width: 840px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            margin: auto;
+            border-radius: 50%;
+            border: 10px solid #ffffff;
+            box-shadow: 0 2px 5px #eeeeee;
+            background: url(/assets/avatar.jpg) no-repeat left top;
+            background-size: cover;
+        }
+
+        .name {
+            margin-top: 14px;
+            font-weight: bold;
+            padding-left: 8px;
+        }
+    </style>
 </head>
 <body>
-    <a href="/blog/">我的博客</a>
+    <section>
+        <div class="avatar"></div>
+        <h3 class="name">Qin YuanBin</h3>
+        <a href="/blog/">我的博客</a>
+    </section>
 </body>
 </html>
