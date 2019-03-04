@@ -1,11 +1,342 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>浅谈JS多语言框架 | 乱七八糟的博客</title><link rel="stylesheet" type="text/css" href="/blog/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/blog/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/blog/favicon.ico"><link rel="apple-touch-icon" href="/blog/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/blog/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">浅谈JS多语言框架</h1><a id="logo" href="/blog/.">乱七八糟的博客</a><p class="description">一个想做游戏和写书的前端打字人员</p></div><div id="nav-menu"><a class="current" href="/blog/."><i class="fa fa-home"> 首页</i></a><a href="/blog/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/blog/about/"><i class="fa fa-user"> 关于</i></a><a href="/blog/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">浅谈JS多语言框架</h1><div class="post-meta">Mar 4, 2019</div><div class="post-content"><h2 id="一、Locales"><a href="#一、Locales" class="headerlink" title="一、Locales"></a>一、Locales</h2><p>我们经常在网上看到的一些支持多语言的网站或者插件 (例如<code>jquery-ui</code>)，设置多语言的都会看到例如<code>en</code>、 <code>en_US</code>、<code>zh_CN</code>等。 这些其实就是描述一种语言具体信息的集合, 用下划线<code>_</code>或者断线<code>-</code>分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(<code>en-US</code>)、阿根廷英语(<code>es-AR</code>)。一般只用到这两个信息就够了，当然后面还可以写更多描述的信息，具体描述信息请参考 <a href="https://tools.ietf.org/html/bcp47" target="_blank" rel="noopener">BCP 47</a>。<br>虽然全世界语言有很多种，但是大部分网站其实只需要实现其中少数的几种就可以了。</p>
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈JS多语言框架">
+<meta property="og:url" content="https://qinyuanbin.github.io/2019/03/04/浅谈JS多语言框架/index.html">
+<meta property="og:site_name" content="有毒的博客">
+<meta property="og:description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-04T09:45:06.728Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈JS多语言框架">
+<meta name="twitter:description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://qinyuanbin.github.io/2019/03/04/浅谈JS多语言框架/">
+
+
+
+
+
+  <title>浅谈JS多语言框架 | 有毒的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">有毒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个想做游戏和写书的前端打字人员</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qinyuanbin.github.io/blog/2019/03/04/浅谈JS多语言框架/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin YuanBin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有毒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅谈JS多语言框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T17:40:52+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、Locales"><a href="#一、Locales" class="headerlink" title="一、Locales"></a>一、Locales</h2><p>我们经常在网上看到的一些支持多语言的网站或者插件 (例如<code>jquery-ui</code>)，设置多语言的都会看到例如<code>en</code>、 <code>en_US</code>、<code>zh_CN</code>等。 这些其实就是描述一种语言具体信息的集合, 用下划线<code>_</code>或者断线<code>-</code>分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(<code>en-US</code>)、阿根廷英语(<code>es-AR</code>)。一般只用到这两个信息就够了，当然后面还可以写更多描述的信息，具体描述信息请参考 <a href="https://tools.ietf.org/html/bcp47" target="_blank" rel="noopener">BCP 47</a>。<br>虽然全世界语言有很多种，但是大部分网站其实只需要实现其中少数的几种就可以了。</p>
 <h2 id="二、判断用户需要什么语言"><a href="#二、判断用户需要什么语言" class="headerlink" title="二、判断用户需要什么语言"></a>二、判断用户需要什么语言</h2><ul>
 <li>在浏览器让用户明确选择语言的类型，再根据用户选择跳转到相应语言的页面<code>（推荐）</code></li>
 <li>服务器通过http请求头<code>Accept-Language</code>来判断用户语言类型</li>
 <li>客户端通过<code>navigator.language</code>或<code>navigator.browserLanguage</code>来判断用户语言类型</li>
 </ul>
 <h2 id="三、框架"><a href="#三、框架" class="headerlink" title="三、框架"></a>三、框架</h2><h3 id="1-format-js-and-window-intl"><a href="#1-format-js-and-window-intl" class="headerlink" title="1. format.js and window.intl"></a>1. format.js and window.intl</h3><p><a href="https://formatjs.io/" target="_blank" rel="noopener">formatjs</a>，好像是<code>window.intl</code>的polyfill，如果没有<code>window.intl</code>才会加载，使用示例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态字符串</span></span><br><span class="line"><span class="string">"Hello everyone"</span></span><br><span class="line"><span class="comment">// 带参数的字符串</span></span><br><span class="line"><span class="string">"Hello &#123;who&#125;"</span></span><br><span class="line"><span class="comment">// 带参数类型的字符串</span></span><br><span class="line"><span class="string">"I have &#123;numCats, number&#125; cats."</span></span><br><span class="line"><span class="comment">// 带参数类型的类型的字符串</span></span><br><span class="line"><span class="string">"Almost &#123;pctBlack, number, percent&#125; of them are black."</span></span><br><span class="line"><span class="comment">// 自定义参数类型</span></span><br><span class="line">formats = &#123;</span><br><span class="line">    number: &#123;</span><br><span class="line">        usd: &#123; <span class="attr">style</span>: <span class="string">'currency'</span>, <span class="attr">currency</span>: <span class="string">'USD'</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 带自定义类型的字符串</span></span><br><span class="line"><span class="string">"Your total is &#123;total, number, usd&#125;"</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(select，根据条件)</span></span><br><span class="line"><span class="string">`&#123;gender, select,</span></span><br><span class="line"><span class="string">    male &#123;He&#125;</span></span><br><span class="line"><span class="string">    female &#123;She&#125;</span></span><br><span class="line"><span class="string">    other &#123;They&#125;</span></span><br><span class="line"><span class="string">&#125; will respond shortly.`</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(plural，根据数量)</span></span><br><span class="line"><span class="string">`Cart: &#123;itemCount&#125; &#123;itemCount, plural,</span></span><br><span class="line"><span class="string">    one &#123;item&#125;</span></span><br><span class="line"><span class="string">    other &#123;items&#125;</span></span><br><span class="line"><span class="string">&#125;`</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(selectordinal，根据顺序)</span></span><br><span class="line"><span class="string">`It's my cat's &#123;year, selectordinal,</span></span><br><span class="line"><span class="string">    one &#123;#st&#125;</span></span><br><span class="line"><span class="string">    two &#123;#nd&#125;</span></span><br><span class="line"><span class="string">    few &#123;#rd&#125;</span></span><br><span class="line"><span class="string">    other &#123;#th&#125;</span></span><br><span class="line"><span class="string">&#125; birthday!`</span></span><br></pre></td></tr></table></figure></p>
-<p>在<code>react</code>中使用:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;IntlProvider, FormattedMessage&#125; <span class="keyword">from</span> <span class="string">'react-intl'</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;IntlProvider locale=<span class="string">"en"</span>&gt;</span><br><span class="line">            &lt;p&gt;</span><br><span class="line">                &lt;FormattedMessage</span><br><span class="line">                    id=<span class="string">"welcome"</span></span><br><span class="line">                    defaultMessage=&#123;<span class="string">`Hello &#123;name&#125;, you have &#123;unreadCount, number&#125; &#123;unreadCount, plural,</span></span><br><span class="line"><span class="string">                      one &#123;message&#125;</span></span><br><span class="line"><span class="string">                      other &#123;messages&#125;</span></span><br><span class="line"><span class="string">                    &#125;`</span>&#125;</span><br><span class="line">                    values=&#123;&#123;<span class="attr">name</span>: &lt;b&gt;&#123;name&#125;&lt;/b&gt;, unreadCount&#125;&#125;</span><br><span class="line">                /&gt;</span><br><span class="line">            &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>IntlProvider&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在<code>react</code>中使用:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;IntlProvider, FormattedMessage&#125; <span class="keyword">from</span> <span class="string">'react-intl'</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;IntlProvider locale=<span class="string">"en"</span>&gt;</span><br><span class="line">            &lt;p&gt;</span><br><span class="line">                &lt;FormattedMessage</span><br><span class="line">                    id=<span class="string">"welcome"</span></span><br><span class="line">                    defaultMessage=&#123;<span class="string">`Hello &#123;name&#125;, you have &#123;unreadCount, number&#125; &#123;unreadCount, plural,</span></span><br><span class="line"><span class="string">                      one &#123;message&#125;</span></span><br><span class="line"><span class="string">                      other &#123;messages&#125;</span></span><br><span class="line"><span class="string">                    &#125;`</span>&#125;</span><br><span class="line">                    values=&#123;&#123;<span class="attr">name</span>: <span class="xml"><span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;name&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span>, unreadCount&#125;&#125;</span><br><span class="line">                /&gt;</span><br><span class="line">            &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>IntlProvider&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-jQuery-I18n-js"><a href="#2-jQuery-I18n-js" class="headerlink" title="2. jQuery.I18n.js"></a>2. jQuery.I18n.js</h3><p><a href="https://github.com/wikimedia/jquery.i18n" target="_blank" rel="noopener">jquery.i18n</a>(<code>i18n: internationalization缩写，中间18个字母</code>)，配置文件为基于<code>json</code>格式的文件，大概如下</p>
 <h5 id="单个语言的配置文件："><a href="#单个语言的配置文件：" class="headerlink" title="单个语言的配置文件："></a>单个语言的配置文件：</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"authors"</span>: [</span><br><span class="line">            <span class="string">"Me"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"last-updated"</span>: <span class="string">"2016-09-21"</span>,</span><br><span class="line">        <span class="attr">"locale"</span>: <span class="string">"en"</span>,</span><br><span class="line">        <span class="attr">"message-documentation"</span>: <span class="string">"qqq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"appname-title"</span>: <span class="string">"Example Application"</span>,</span><br><span class="line">    <span class="attr">"appname-sub-title"</span>: <span class="string">"An example application with jquery.i18n"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="多个语言的放在一起的配置文件："><a href="#多个语言的放在一起的配置文件：" class="headerlink" title="多个语言的放在一起的配置文件："></a>多个语言的放在一起的配置文件：</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"authors"</span>: [</span><br><span class="line">            <span class="string">"Me"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"last-updated"</span>: <span class="string">"2016-09-21"</span>,</span><br><span class="line">        <span class="attr">"message-documentation"</span>: <span class="string">"qqq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"en"</span>: &#123;</span><br><span class="line">        <span class="attr">"appname-title"</span>: <span class="string">"Example Application"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"ru"</span>: &#123;</span><br><span class="line">        <span class="attr">"appname-title"</span>: <span class="string">"Ð¢ÐµÑÑ‚Ð¾Ð²Ð¾Ðµ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"//"</span>: <span class="string">"动态加载配置文件（此行为json注释）"</span>,</span><br><span class="line">    <span class="attr">"en_US"</span>: <span class="string">"en_US.yml"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -24,4 +355,372 @@
 <li><a href="https://phraseapp.com/blog/posts/step-step-guide-javascript-localization/" target="_blank" rel="noopener">https://phraseapp.com/blog/posts/step-step-guide-javascript-localization/</a></li>
 <li><a href="https://tools.ietf.org/html/bcp47" target="_blank" rel="noopener">https://tools.ietf.org/html/bcp47</a></li>
 </ol>
-</div><div class="tags"></div><div class="post-nav"><a class="next" href="/blog/2019/02/28/React条件渲染组件: rc-if-else/">React条件渲染组件:rc-if-else</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="https://qinyuanbin.github.io"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/blog/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/Javascript/">Javascript</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/旅游/">旅游</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/读书/">读书</a></li><li class="category-list-item"><a class="category-list-link" href="/blog/categories/随感/">随感</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/blog/tags/一个人的朝圣/" style="font-size: 15px;">一个人的朝圣</a> <a href="/blog/tags/react-conditional-rendering-rc-if-else-show-hide-element/" style="font-size: 15px;">react conditional-rendering rc-if-else show-hide-element</a> <a href="/blog/tags/gulp/" style="font-size: 15px;">gulp</a> <a href="/blog/tags/雪碧图/" style="font-size: 15px;">雪碧图</a> <a href="/blog/tags/spritesmith/" style="font-size: 15px;">spritesmith</a> <a href="/blog/tags/WebUploader/" style="font-size: 15px;">WebUploader</a> <a href="/blog/tags/分片上传/" style="font-size: 15px;">分片上传</a> <a href="/blog/tags/奇思妙想/" style="font-size: 15px;">奇思妙想</a> <a href="/blog/tags/社会现象/" style="font-size: 15px;">社会现象</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/blog/2019/03/04/浅谈JS多语言框架/">浅谈JS多语言框架</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2019/02/28/React条件渲染组件: rc-if-else/">React条件渲染组件:rc-if-else</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2018/12/06/《失控》读后感/">《失控》读后感</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/11/15/Rxjs学习笔记/">Rxjs学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/11/09/生命诞生的奥秘/">生命诞生的奥秘</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/10/11/前端自动生成雪碧图/">前端自动生成雪碧图</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/10/11/大文件的分片上传/">大文件的分片上传</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/09/12/一个人的朝圣读后感（一）/">一个人的朝圣读后感（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/09/12/一个人的朝圣读后感（三）/">一个人的朝圣读后感（三）</a></li><li class="post-list-item"><a class="post-list-link" href="/blog/2017/09/12/一个人的朝圣读后感（二）/">一个人的朝圣读后感（二）</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/blog/." rel="nofollow">乱七八糟的博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/blog/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/blog/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/javascript" src="/blog/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/blog/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/02/28/React条件渲染组件: rc-if-else/" rel="next" title="React条件渲染组件:rc-if-else">
+                <i class="fa fa-chevron-left"></i> React条件渲染组件:rc-if-else
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.gif" alt="Qin YuanBin">
+          <p class="site-author-name" itemprop="name">Qin YuanBin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives/">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinyuanbin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="a591737386@163.com" target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Locales"><span class="nav-number">1.</span> <span class="nav-text">一、Locales</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、判断用户需要什么语言"><span class="nav-number">2.</span> <span class="nav-text">二、判断用户需要什么语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、框架"><span class="nav-number">3.</span> <span class="nav-text">三、框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-format-js-and-window-intl"><span class="nav-number">3.1.</span> <span class="nav-text">1. format.js and window.intl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-jQuery-I18n-js"><span class="nav-number">3.2.</span> <span class="nav-text">2. jQuery.I18n.js</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#单个语言的配置文件："><span class="nav-number">3.2.0.1.</span> <span class="nav-text">单个语言的配置文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#多个语言的放在一起的配置文件："><span class="nav-number">3.2.0.2.</span> <span class="nav-text">多个语言的放在一起的配置文件：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#demo："><span class="nav-number">3.2.0.3.</span> <span class="nav-text">demo：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Polyglot-js"><span class="nav-number">3.3.</span> <span class="nav-text">3. Polyglot.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Globalize-js"><span class="nav-number">3.4.</span> <span class="nav-text">4. Globalize.js</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#需要注意的是："><span class="nav-number">4.0.0.1.</span> <span class="nav-text">需要注意的是：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考链接"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">参考链接</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin YuanBin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/blog/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+
+</body>
+</html>
