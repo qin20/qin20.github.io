@@ -78,7 +78,7 @@
 <link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="js框架,locales,国际化,多语言,">
 
 
 
@@ -95,13 +95,14 @@
 
 
 <meta name="description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+<meta name="keywords" content="js框架,locales,国际化,多语言">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈JS多语言框架">
 <meta property="og:url" content="https://qinyuanbin.github.io/2019/03/04/浅谈JS多语言框架/index.html">
 <meta property="og:site_name" content="有毒的博客">
 <meta property="og:description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-05T02:10:22.309Z">
+<meta property="og:updated_time" content="2019-03-05T02:58:13.642Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈JS多语言框架">
 <meta name="twitter:description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
@@ -302,6 +303,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -337,7 +360,7 @@
 </ul>
 <h2 id="三、框架"><a href="#三、框架" class="headerlink" title="三、框架"></a>三、框架</h2><h3 id="1-format-js-and-window-intl"><a href="#1-format-js-and-window-intl" class="headerlink" title="1. format.js and window.intl"></a>1. format.js and window.intl</h3><p><a href="https://formatjs.io/" target="_blank" rel="noopener">formatjs</a>，好像是<code>window.intl</code>的polyfill，如果没有<code>window.intl</code>才会加载，使用示例：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态字符串</span></span><br><span class="line"><span class="string">"Hello everyone"</span></span><br><span class="line"><span class="comment">// 带参数的字符串</span></span><br><span class="line"><span class="string">"Hello &#123;who&#125;"</span></span><br><span class="line"><span class="comment">// 带参数类型的字符串</span></span><br><span class="line"><span class="string">"I have &#123;numCats, number&#125; cats."</span></span><br><span class="line"><span class="comment">// 带参数类型的类型的字符串</span></span><br><span class="line"><span class="string">"Almost &#123;pctBlack, number, percent&#125; of them are black."</span></span><br><span class="line"><span class="comment">// 自定义参数类型</span></span><br><span class="line">formats = &#123;</span><br><span class="line">    number: &#123;</span><br><span class="line">        usd: &#123; <span class="attr">style</span>: <span class="string">'currency'</span>, <span class="attr">currency</span>: <span class="string">'USD'</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 带自定义类型的字符串</span></span><br><span class="line"><span class="string">"Your total is &#123;total, number, usd&#125;"</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(select，根据条件)</span></span><br><span class="line"><span class="string">`&#123;gender, select,</span></span><br><span class="line"><span class="string">    male &#123;He&#125;</span></span><br><span class="line"><span class="string">    female &#123;She&#125;</span></span><br><span class="line"><span class="string">    other &#123;They&#125;</span></span><br><span class="line"><span class="string">&#125; will respond shortly.`</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(plural，根据数量)</span></span><br><span class="line"><span class="string">`Cart: &#123;itemCount&#125; &#123;itemCount, plural,</span></span><br><span class="line"><span class="string">    one &#123;item&#125;</span></span><br><span class="line"><span class="string">    other &#123;items&#125;</span></span><br><span class="line"><span class="string">&#125;`</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(selectordinal，根据顺序)</span></span><br><span class="line"><span class="string">`It's my cat's &#123;year, selectordinal,</span></span><br><span class="line"><span class="string">    one &#123;#st&#125;</span></span><br><span class="line"><span class="string">    two &#123;#nd&#125;</span></span><br><span class="line"><span class="string">    few &#123;#rd&#125;</span></span><br><span class="line"><span class="string">    other &#123;#th&#125;</span></span><br><span class="line"><span class="string">&#125; birthday!`</span></span><br></pre></td></tr></table></figure>
-<p>在<code>react</code>中使用:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;IntlProvider, FormattedMessage&#125; <span class="keyword">from</span> <span class="string">'react-intl'</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;IntlProvider locale=<span class="string">"en"</span>&gt;</span><br><span class="line">            &lt;p&gt;</span><br><span class="line">                &lt;FormattedMessage</span><br><span class="line">                    id=<span class="string">"welcome"</span></span><br><span class="line">                    defaultMessage=&#123;<span class="string">`Hello &#123;name&#125;, you have &#123;unreadCount, number&#125; &#123;unreadCount, plural,</span></span><br><span class="line"><span class="string">                      one &#123;message&#125;</span></span><br><span class="line"><span class="string">                      other &#123;messages&#125;</span></span><br><span class="line"><span class="string">                    &#125;`</span>&#125;</span><br><span class="line">                    values=&#123;&#123;<span class="attr">name</span>: &lt;b&gt;&#123;name&#125;&lt;/b&gt;, unreadCount&#125;&#125;</span><br><span class="line">                /&gt;</span><br><span class="line">            &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>IntlProvider&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在<code>react</code>中使用:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;IntlProvider, FormattedMessage&#125; <span class="keyword">from</span> <span class="string">'react-intl'</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;IntlProvider locale=<span class="string">"en"</span>&gt;</span><br><span class="line">            &lt;p&gt;</span><br><span class="line">                &lt;FormattedMessage</span><br><span class="line">                    id=<span class="string">"welcome"</span></span><br><span class="line">                    defaultMessage=&#123;<span class="string">`Hello &#123;name&#125;, you have &#123;unreadCount, number&#125; &#123;unreadCount, plural,</span></span><br><span class="line"><span class="string">                      one &#123;message&#125;</span></span><br><span class="line"><span class="string">                      other &#123;messages&#125;</span></span><br><span class="line"><span class="string">                    &#125;`</span>&#125;</span><br><span class="line">                    values=&#123;&#123;<span class="attr">name</span>: <span class="xml"><span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;name&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span>, unreadCount&#125;&#125;</span><br><span class="line">                /&gt;</span><br><span class="line">            &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>IntlProvider&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-jQuery-I18n-js"><a href="#2-jQuery-I18n-js" class="headerlink" title="2. jQuery.I18n.js"></a>2. jQuery.I18n.js</h3><p><a href="https://github.com/wikimedia/jquery.i18n" target="_blank" rel="noopener">jquery.i18n</a>(<code>i18n: internationalization缩写，中间18个字母</code>)，配置文件为基于<code>json</code>格式的文件，大概如下</p>
 <h4 id="单个语言的配置文件："><a href="#单个语言的配置文件：" class="headerlink" title="单个语言的配置文件："></a>单个语言的配置文件：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"authors"</span>: [</span><br><span class="line">            <span class="string">"Me"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"last-updated"</span>: <span class="string">"2016-09-21"</span>,</span><br><span class="line">        <span class="attr">"locale"</span>: <span class="string">"en"</span>,</span><br><span class="line">        <span class="attr">"message-documentation"</span>: <span class="string">"qqq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"appname-title"</span>: <span class="string">"Example Application"</span>,</span><br><span class="line">    <span class="attr">"appname-sub-title"</span>: <span class="string">"An example application with jquery.i18n"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="多个语言的放在一起的配置文件："><a href="#多个语言的放在一起的配置文件：" class="headerlink" title="多个语言的放在一起的配置文件："></a>多个语言的放在一起的配置文件：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"authors"</span>: [</span><br><span class="line">            <span class="string">"Me"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"last-updated"</span>: <span class="string">"2016-09-21"</span>,</span><br><span class="line">        <span class="attr">"message-documentation"</span>: <span class="string">"qqq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"en"</span>: &#123;</span><br><span class="line">        <span class="attr">"appname-title"</span>: <span class="string">"Example Application"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"ru"</span>: &#123;</span><br><span class="line">        <span class="attr">"appname-title"</span>: <span class="string">"Ð¢ÐµÑÑ‚Ð¾Ð²Ð¾Ðµ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"//"</span>: <span class="string">"动态加载配置文件（此行为json注释）"</span>,</span><br><span class="line">    <span class="attr">"en_US"</span>: <span class="string">"en_US.yml"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -370,6 +393,18 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/js框架/" rel="tag"># js框架</a>
+          
+            <a href="/blog/tags/locales/" rel="tag"># locales</a>
+          
+            <a href="/blog/tags/国际化/" rel="tag"># 国际化</a>
+          
+            <a href="/blog/tags/多语言/" rel="tag"># 多语言</a>
+          
+        </div>
       
 
       
@@ -463,7 +498,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/blog/archives/">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -474,7 +509,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -485,7 +520,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
