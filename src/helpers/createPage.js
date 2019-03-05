@@ -6,6 +6,13 @@ import { GlobalStyle,  }  from '~/styles';
 
 export default (Component) => {
     class Page extends React.Component {
+        componentDidMount() {
+            window.mya = ['/slides/', '/blog/'].indexOf(window.location.pathname) >= 0;
+            if (['/slides/', '/blog/'].indexOf(window.location.pathname) >= 0) {
+                window.location.href = window.location.pathname;
+            }
+        }
+
         render() {
             return (
                 <Provider store={store}>

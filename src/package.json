@@ -7,7 +7,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next export && rm -rf ../_next ../index ../static ../404.html ../index.html && cp -rf out/ ../"
+    "export": "npm run build && next export && rm -rf ../_next ../index ../static ../404.html ../index.html && cp -rf out/ ../"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "antd": "^3.13.2",
     "immutable": "^4.0.0-rc.12",
     "next": "^8.0.3",
+    "next-routes": "^1.4.2",
     "prop-types": "^15.7.2",
     "rc-if-else": "^1.0.1-3",
     "react": "^16.8.3",
