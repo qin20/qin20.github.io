@@ -12,4 +12,7 @@ module.exports = {
     },
     assetPrefix: process.env.NODE_ENV === 'production' ? src : '',
     // another configuration
+    exportPathMap: function() {
+        console.log(arguments);
+    }
 };
