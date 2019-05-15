@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Javascript,Testing,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="前段时间，有一个刚入坑前端的妹子打电话问我：如何测试她的项目代码？我告诉她，测试是一个非常复杂而庞大的话题，在电话里说不清楚。我答应她帮她在网上找点学习资料。 然后我就坐在电脑面前开始goggle。我找了非常之多的相关的文章，我挑了一篇给她，但是对这篇文章的深度和讨论的东西不是非常的满意。我几乎找不到一篇全面的，适合新手入门的前端测试知识的文章。也几乎找不到一篇同时兼顾理论和实践，完全为测试而写的">
+<meta name="keywords" content="Javascript,Testing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="测试你的前端代码一(介绍)">
+<meta property="og:url" content="https://qinyuanbin.github.io/2019/05/14/测试你的前端代码一(介绍)/index.html">
+<meta property="og:site_name" content="有毒的博客">
+<meta property="og:description" content="前段时间，有一个刚入坑前端的妹子打电话问我：如何测试她的项目代码？我告诉她，测试是一个非常复杂而庞大的话题，在电话里说不清楚。我答应她帮她在网上找点学习资料。 然后我就坐在电脑面前开始goggle。我找了非常之多的相关的文章，我挑了一篇给她，但是对这篇文章的深度和讨论的东西不是非常的满意。我几乎找不到一篇全面的，适合新手入门的前端测试知识的文章。也几乎找不到一篇同时兼顾理论和实践，完全为测试而写的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-15T05:01:19.812Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="测试你的前端代码一(介绍)">
+<meta name="twitter:description" content="前段时间，有一个刚入坑前端的妹子打电话问我：如何测试她的项目代码？我告诉她，测试是一个非常复杂而庞大的话题，在电话里说不清楚。我答应她帮她在网上找点学习资料。 然后我就坐在电脑面前开始goggle。我找了非常之多的相关的文章，我挑了一篇给她，但是对这篇文章的深度和讨论的东西不是非常的满意。我几乎找不到一篇全面的，适合新手入门的前端测试知识的文章。也几乎找不到一篇同时兼顾理论和实践，完全为测试而写的">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://qinyuanbin.github.io/2019/05/14/测试你的前端代码一(介绍)/">
+
+
+
+
+
+  <title>测试你的前端代码一(介绍) | 有毒的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">有毒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个想做游戏和写书的前端打字人员</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qinyuanbin.github.io/blog/2019/05/14/测试你的前端代码一(介绍)/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin YuanBin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有毒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">测试你的前端代码一(介绍)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T09:32:15+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前段时间，有一个刚入坑前端的妹子打电话问我：如何测试她的项目代码？我告诉她，测试是一个非常复杂而庞大的话题，在电话里说不清楚。我答应她帮她在网上找点学习资料。</p>
+<p>然后我就坐在电脑面前开始goggle。我找了非常之多的相关的文章，我挑了一篇给她，但是对这篇文章的深度和讨论的东西不是非常的满意。我几乎找不到一篇全面的，适合新手入门的前端测试知识的文章。也几乎找不到一篇同时兼顾理论和实践，完全为测试而写的文章。</p>
+<p>所以我决定写一篇。这篇是我这个系列的第一部分。一共有以下几个部分：</p>
+<ul>
+<li>介绍</li>
+<li><a href="https://hackernoon.com/testing-your-frontend-code-part-ii-unit-testing-1d05f8d50859#.xf5q3crth" target="_blank" rel="noopener">单元测试</a></li>
+<li><a href="https://hackernoon.com/testing-your-frontend-code-part-iii-e2e-testing-e9261b56475" target="_blank" rel="noopener">E2E测试（end-to-end测试）</a></li>
+<li><a href="https://hackernoon.com/testing-your-frontend-code-part-iv-integration-testing-f1f4609dc4d9" target="_blank" rel="noopener">集成测试（integration testing）</a></li>
+<li><a href="https://medium.com/@giltayar/testing-your-frontend-code-part-v-visual-testing-935864cfb5c7" target="_blank" rel="noopener">可视化测试（visual testing）</a></li>
+</ul>
+<p>为了这个系列的内容，我写了一个简单的应用——<a href="http://frontend-testing.surge.sh/" target="_blank" rel="noopener">计算器</a>——用来当做测试的例子。<a href="https://github.com/giltayar/frontend-testing" target="_blank" rel="noopener">源码</a>。</p>
+<h2 id="什么是测试？"><a href="#什么是测试？" class="headerlink" title="什么是测试？"></a>什么是测试？</h2><p>测试，我认为就是写代码。然后用这些代码来检查你写的app代码（生产环境代码）运行结果是否符合预期。有些人喜欢把这个概念等同于TDD（测试驱动开发或者测试驱动架构），但其实<a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">TDD</a>只是测试方法的一种具体实践，在这个实践方案中，测试用例会先于app代码的编写，并且后续都围绕测试用例去设计和开发程序。</p>
+<p>坦白说，我认为测试用例先写或者后写其实都无足轻重，它们最终的目的都是让码农们可以有信心说一句：我的程序可以提测了。由于我所崇敬的几位大神在觉得测试是程序开发中必要而且非常重要的东西，这也是我写这篇文章的另一个原因。</p>
+<p>TDD和其他测试的区别，有兴趣的请移步<a href="https://martinfowler.com/articles/is-tdd-dead/" target="_blank" rel="noopener">这里</a>，但是我建议观看完本系列文章之后再去阅读。</p>
+<h2 id="为什么要测试？"><a href="#为什么要测试？" class="headerlink" title="为什么要测试？"></a>为什么要测试？</h2><p>其实我并没有打算去论证为什么要测试，如果你觉得你不需要测试的话，那就别测试。但是你最好有心里准备——你可能要对同一个功能和代码，一遍又一遍的人工测试。这些你记得昨天刚修复过得的小bug会一次又一次的出现以至于你夜不能寐。发布这样的代码到生产环境，将会是一场惊心动魄的冒险之旅。但是，我从来都不喜欢强迫观点——到底要不要测试取决于你自己怎么看。</p>
+<h2 id="测试的分类"><a href="#测试的分类" class="headerlink" title="测试的分类"></a>测试的分类</h2><p>有一个一直困扰着大部分人（特别是对于那些刚接触前端的萌新来说）测试方法的种类太多了，一头雾水，如果你稍微研究过这个领域，你肯定听说过下面这些词语：unit tests（单元测试）, acceptance tests（验收测试）, integration tests（集成测试）, end to end tests（端对端测试）, component tests（组件测试）, and service tests（服务测试）.</p>
+<p>更惨的是，几个人在对这些概念侃侃而谈的时候，他们的理解跟别人说的完全不一样。</p>
+<p>其实对于我而言，概念并不是重点，因为没有一个百分之百准确的概念来涵盖这些所有的种类，但是所有的测试种类都居于这两者中间：单元测试和端对端测试（下文简称E2E测试）。</p>
+<h2 id="测试的分类的范围划分"><a href="#测试的分类的范围划分" class="headerlink" title="测试的分类的范围划分"></a>测试的分类的范围划分</h2><p>拿最简单的单元测试来说。单元测试就是指按照一个个“单元”来编写测试代码的方法。那么什么是一个“单元”呢？其实要看你用的编程语言。它有可能是一个函数(function)，一个模块(module)，一个包(package)，一个类(class)，甚至一个对象(object)（比如像Javascript和Scala这类语言）。在Javascript中，通常是指一个类或者一个模块（拿npm或者commomjs规范来说，一个“模块”就是一个文件的代码）。</p>
+<p>最重要的事情是单元之间是分开测试的。这非常适合用来测试一些算法，函数（比如一个计算字符串长度的函数），和包含一系列验证函数的类。</p>
+<p>这类代码用单元测试来做非常容易，因为它们之间不存在依赖性。但是如果我要测试的单元依赖于其他单元呢？这个时候有两种方法：两个单元放一块测试或者模拟(mock)另一个模块。</p>
+<p>思考一下，如果我们两个单元一块测试，那它还是一个“单元”测试吗？这里就是第一个容易产生歧义的地方，较真的人可能会说这不是单元测试。但是要我来说，我不管什么单元不单元的，叫什么不重要，你可以叫它集成测试，两个单元的测试，或者其他你喜欢的名字都可以，但这些都不是我讨论的重点。</p>
+<p>上面说到模拟(mock)另一个模块，可能很多人脑海中没有一个具体的场景，我们来举一个列子，请看下面代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">exports.writeSumToFile = <span class="function">(<span class="params">a, b, fileSumWriter</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> sum = a + b</span><br><span class="line"></span><br><span class="line">  fileSumWriter(sum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个单元有一个名为<code>writeSumToFile</code>的函数，它接受两个数字和一个函数作为参数，然后计算出结果并写到一个文件里面。</p>
+<p>但是注意，函数本身不会去做<code>write</code>操作，在里面又使用了另一个单元的方法<code>fileSumWriter</code>来执行这个操作。</p>
+<p>为了测试这个单元，我们可以传入真正的<code>fileSumWriter</code>函数，或者，我们可以传入一个不具有写操作的函数去模拟一下就够了。</p>
+<p>当我们传一个模拟的数据到一个函数中的时候，这个时候它是一个真正意义上的单元测试。但是如果我们把这两个单元放一起测试，许多人就不那么认为了。</p>
+<p>大家怎么命名这都不是重点。</p>
+<p>现在，我们为我们的代码写完了单元测试，接下来就是E2E测试(app级别测试)了。E2E测试所有一切可以测试的东西，以确保所有程序在生产环境都保持着一致性。</p>
+<p>这就是所有测试种类的两个极端。在两个极端中间就渐变式的分布着各种测试种类。在两中极端中，越来越多的代码被测试，越来越少的代码被模拟。</p>
+<p>有些人喜欢把介于这两者中间的测试叫做“集成测试”，但是在TDD的开发者眼里，集成测试又是另一种完全不同概念，这个我们以后也会讨论到。我们暂且先把这种比单元测试测得多，但是却比E2E测试少的测试叫做“集成测试”。</p>
+<p>那我们怎么在这两者之间去做取舍呢？很多人都认为说有一个金字塔递减的测试原则：多一些单元测试，少一些集成测试，尽量别有E2E测试。这个问题我们留到这系列文章的最后进行讨论，因为我们首先要先了解了什么是单元测试、集成测试和E2E测试，这些我们都会在这个系列中一一探讨。</p>
+<p>接下来的几篇文章中我们将依次讨论单元测试，集成测试和E2E测试，最后我们还将讨论开发者在测试中的一些常见问题——到底要写多少测试才算合格和测试中的一些注意事项。</p>
+<p>为了更好的阐述我的观点，我写了一个非常简单的应用——<a href="http://frontend-testing.surge.sh/" target="_blank" rel="noopener">计算器（Calculator）</a>——我将用它来展示如何开展测试。<a href="https://github.com/giltayar/frontend-testing" target="_blank" rel="noopener">源码地址</a>。注意现在它还没有完成它的测试，但是我们会在接下来的文章中逐步完善这个应用的测试。</p>
+<p>讨论单元测试的部分，我将会在下一周发表。</p>
+<h2 id="可视化测试"><a href="#可视化测试" class="headerlink" title="可视化测试"></a>可视化测试</h2><p>有一个叫做Applitools的公司做的事情很有意思，他们生产一些工具帮助我们把前端代码的测试可视化，自动化的检查当CSS，JS或者HTML变化的时候你的组件仍旧可以按预期一样运行，尽量别出现一些意外的事情。他们刚刚发布一个可以可视化<code>React Storybook</code>里所有测试的工具，而且不需要编写任何额外的代码。</p>
+<p>这款工具确实很不错，如果你也在使用react，并且有兴趣，可以免费试试：<a href="http://testautomation.applitools.com/post/170337956797/visually-testing-react-components-using-the-eyes?utm_source=SOF&amp;utm_medium=GT" target="_blank" rel="noopener">传送门</a>。</p>
+<p>原文地址：<a href="https://medium.com/@giltayar/testing-your-frontend-code-part-i-introduction-7e307eac4446" target="_blank" rel="noopener">https://medium.com/@giltayar/testing-your-frontend-code-part-i-introduction-7e307eac4446</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/Javascript/" rel="tag"># Javascript</a>
+          
+            <a href="/blog/tags/Testing/" rel="tag"># Testing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/03/04/浅谈JS多语言框架/" rel="next" title="浅谈JS多语言框架">
+                <i class="fa fa-chevron-left"></i> 浅谈JS多语言框架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.gif" alt="Qin YuanBin">
+          <p class="site-author-name" itemprop="name">Qin YuanBin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinyuanbin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:a591737386@163.com?subject=xxx%E8%87%B4%E6%9C%89%E6%AF%92%E5%8D%9A%E4%B8%BB%E7%9A%84%E4%B8%80%E5%B0%81%E4%BF%A1&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%8D%9A%E4%B8%BB%EF%BC%9A%0A%0A%09%E6%88%91%E5%9C%A8%E6%9C%89%E6%AF%92%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%9C%8B%E5%88%B0%E4%BD%A0%E7%9A%84%E6%96%87%E7%AB%A0%E3%80%8Axxx%E3%80%8B%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E6%83%B3%E8%A6%81%E9%97%AE%E4%BD%A0..." target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是测试？"><span class="nav-number">1.</span> <span class="nav-text">什么是测试？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要测试？"><span class="nav-number">2.</span> <span class="nav-text">为什么要测试？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试的分类"><span class="nav-number">3.</span> <span class="nav-text">测试的分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试的分类的范围划分"><span class="nav-number">4.</span> <span class="nav-text">测试的分类的范围划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可视化测试"><span class="nav-number">5.</span> <span class="nav-text">可视化测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin YuanBin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/blog/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+
+</body>
+</html>

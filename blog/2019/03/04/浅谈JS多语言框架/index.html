@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="js框架,locales,国际化,多语言,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+<meta name="keywords" content="js框架,locales,国际化,多语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈JS多语言框架">
+<meta property="og:url" content="https://qinyuanbin.github.io/2019/03/04/浅谈JS多语言框架/index.html">
+<meta property="og:site_name" content="有毒的博客">
+<meta property="og:description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-03-05T02:58:13.642Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈JS多语言框架">
+<meta name="twitter:description" content="一、Locales我们经常在网上看到的一些支持多语言的网站或者插件 (例如jquery-ui)，设置多语言的都会看到例如en、 en_US、zh_CN等。 这些其实就是描述一种语言具体信息的集合, 用下划线_或者断线-分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(en-US)、阿根廷英语(es-AR)。一般只用到这两个信息就够了，当然后面还">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://qinyuanbin.github.io/2019/03/04/浅谈JS多语言框架/">
+
+
+
+
+
+  <title>浅谈JS多语言框架 | 有毒的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">有毒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个想做游戏和写书的前端打字人员</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qinyuanbin.github.io/blog/2019/03/04/浅谈JS多语言框架/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin YuanBin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有毒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">浅谈JS多语言框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T17:40:52+08:00">
+                2019-03-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一、Locales"><a href="#一、Locales" class="headerlink" title="一、Locales"></a>一、Locales</h2><p>我们经常在网上看到的一些支持多语言的网站或者插件 (例如<code>jquery-ui</code>)，设置多语言的都会看到例如<code>en</code>、 <code>en_US</code>、<code>zh_CN</code>等。 这些其实就是描述一种语言具体信息的集合, 用下划线<code>_</code>或者断线<code>-</code>分割, 最前面部分通常是指语言, 比如英语、 中文、日语等。第二部分通常是指国家或者地区，比如美国英语(<code>en-US</code>)、阿根廷英语(<code>es-AR</code>)。一般只用到这两个信息就够了，当然后面还可以写更多描述的信息，具体描述信息请参考 <a href="https://tools.ietf.org/html/bcp47" target="_blank" rel="noopener">BCP 47</a>。<br>虽然全世界语言有很多种，但是大部分网站其实只需要实现其中少数的几种就可以了。</p>
+<h2 id="二、判断用户需要什么语言"><a href="#二、判断用户需要什么语言" class="headerlink" title="二、判断用户需要什么语言"></a>二、判断用户需要什么语言</h2><ul>
+<li>在浏览器让用户明确选择语言的类型，再根据用户选择跳转到相应语言的页面<code>（推荐）</code></li>
+<li>服务器通过http请求头<code>Accept-Language</code>来判断用户语言类型</li>
+<li>客户端通过<code>navigator.language</code>或<code>navigator.browserLanguage</code>来判断用户语言类型</li>
+</ul>
+<h2 id="三、框架"><a href="#三、框架" class="headerlink" title="三、框架"></a>三、框架</h2><h3 id="1-format-js-and-window-intl"><a href="#1-format-js-and-window-intl" class="headerlink" title="1. format.js and window.intl"></a>1. format.js and window.intl</h3><p><a href="https://formatjs.io/" target="_blank" rel="noopener">formatjs</a>，好像是<code>window.intl</code>的polyfill，如果没有<code>window.intl</code>才会加载，使用示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 静态字符串</span></span><br><span class="line"><span class="string">"Hello everyone"</span></span><br><span class="line"><span class="comment">// 带参数的字符串</span></span><br><span class="line"><span class="string">"Hello &#123;who&#125;"</span></span><br><span class="line"><span class="comment">// 带参数类型的字符串</span></span><br><span class="line"><span class="string">"I have &#123;numCats, number&#125; cats."</span></span><br><span class="line"><span class="comment">// 带参数类型的类型的字符串</span></span><br><span class="line"><span class="string">"Almost &#123;pctBlack, number, percent&#125; of them are black."</span></span><br><span class="line"><span class="comment">// 自定义参数类型</span></span><br><span class="line">formats = &#123;</span><br><span class="line">    number: &#123;</span><br><span class="line">        usd: &#123; <span class="attr">style</span>: <span class="string">'currency'</span>, <span class="attr">currency</span>: <span class="string">'USD'</span> &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 带自定义类型的字符串</span></span><br><span class="line"><span class="string">"Your total is &#123;total, number, usd&#125;"</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(select，根据条件)</span></span><br><span class="line"><span class="string">`&#123;gender, select,</span></span><br><span class="line"><span class="string">    male &#123;He&#125;</span></span><br><span class="line"><span class="string">    female &#123;She&#125;</span></span><br><span class="line"><span class="string">    other &#123;They&#125;</span></span><br><span class="line"><span class="string">&#125; will respond shortly.`</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(plural，根据数量)</span></span><br><span class="line"><span class="string">`Cart: &#123;itemCount&#125; &#123;itemCount, plural,</span></span><br><span class="line"><span class="string">    one &#123;item&#125;</span></span><br><span class="line"><span class="string">    other &#123;items&#125;</span></span><br><span class="line"><span class="string">&#125;`</span></span><br><span class="line"><span class="comment">// 有多种情况的字符串(selectordinal，根据顺序)</span></span><br><span class="line"><span class="string">`It's my cat's &#123;year, selectordinal,</span></span><br><span class="line"><span class="string">    one &#123;#st&#125;</span></span><br><span class="line"><span class="string">    two &#123;#nd&#125;</span></span><br><span class="line"><span class="string">    few &#123;#rd&#125;</span></span><br><span class="line"><span class="string">    other &#123;#th&#125;</span></span><br><span class="line"><span class="string">&#125; birthday!`</span></span><br></pre></td></tr></table></figure>
+<p>在<code>react</code>中使用:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;IntlProvider, FormattedMessage&#125; <span class="keyword">from</span> <span class="string">'react-intl'</span>;</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        &lt;IntlProvider locale=<span class="string">"en"</span>&gt;</span><br><span class="line">            &lt;p&gt;</span><br><span class="line">                &lt;FormattedMessage</span><br><span class="line">                    id=<span class="string">"welcome"</span></span><br><span class="line">                    defaultMessage=&#123;<span class="string">`Hello &#123;name&#125;, you have &#123;unreadCount, number&#125; &#123;unreadCount, plural,</span></span><br><span class="line"><span class="string">                      one &#123;message&#125;</span></span><br><span class="line"><span class="string">                      other &#123;messages&#125;</span></span><br><span class="line"><span class="string">                    &#125;`</span>&#125;</span><br><span class="line">                    values=&#123;&#123;<span class="attr">name</span>: <span class="xml"><span class="tag">&lt;<span class="name">b</span>&gt;</span>&#123;name&#125;<span class="tag">&lt;/<span class="name">b</span>&gt;</span></span>, unreadCount&#125;&#125;</span><br><span class="line">                /&gt;</span><br><span class="line">            &lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>IntlProvider&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-jQuery-I18n-js"><a href="#2-jQuery-I18n-js" class="headerlink" title="2. jQuery.I18n.js"></a>2. jQuery.I18n.js</h3><p><a href="https://github.com/wikimedia/jquery.i18n" target="_blank" rel="noopener">jquery.i18n</a>(<code>i18n: internationalization缩写，中间18个字母</code>)，配置文件为基于<code>json</code>格式的文件，大概如下</p>
+<h4 id="单个语言的配置文件："><a href="#单个语言的配置文件：" class="headerlink" title="单个语言的配置文件："></a>单个语言的配置文件：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"authors"</span>: [</span><br><span class="line">            <span class="string">"Me"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"last-updated"</span>: <span class="string">"2016-09-21"</span>,</span><br><span class="line">        <span class="attr">"locale"</span>: <span class="string">"en"</span>,</span><br><span class="line">        <span class="attr">"message-documentation"</span>: <span class="string">"qqq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"appname-title"</span>: <span class="string">"Example Application"</span>,</span><br><span class="line">    <span class="attr">"appname-sub-title"</span>: <span class="string">"An example application with jquery.i18n"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="多个语言的放在一起的配置文件："><a href="#多个语言的放在一起的配置文件：" class="headerlink" title="多个语言的放在一起的配置文件："></a>多个语言的放在一起的配置文件：</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"@metadata"</span>: &#123;</span><br><span class="line">        <span class="attr">"authors"</span>: [</span><br><span class="line">            <span class="string">"Me"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"last-updated"</span>: <span class="string">"2016-09-21"</span>,</span><br><span class="line">        <span class="attr">"message-documentation"</span>: <span class="string">"qqq"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"en"</span>: &#123;</span><br><span class="line">        <span class="attr">"appname-title"</span>: <span class="string">"Example Application"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"ru"</span>: &#123;</span><br><span class="line">        <span class="attr">"appname-title"</span>: <span class="string">"Ð¢ÐµÑÑ‚Ð¾Ð²Ð¾Ðµ Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"//"</span>: <span class="string">"动态加载配置文件（此行为json注释）"</span>,</span><br><span class="line">    <span class="attr">"en_US"</span>: <span class="string">"en_US.yml"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="demo："><a href="#demo：" class="headerlink" title="demo："></a>demo：</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 需要指定lang="en" --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span> <span class="attr">dir</span>=<span class="string">"ltr"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span>...<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"lang-switch"</span> <span class="attr">data-locale</span>=<span class="string">"en"</span>&gt;</span>English<span class="tag">&lt;/<span class="name">a</span>&gt;</span> |</span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"lang-switch"</span> <span class="attr">data-locale</span>=<span class="string">"ru"</span>&gt;</span>Русский<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">data-i18n</span>=<span class="string">"welcome"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"messages"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">            jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> update_texts = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                    $(<span class="string">'body'</span>).i18n();</span></span><br><span class="line"><span class="undefined">                &#125;;</span></span><br><span class="line"><span class="javascript">                $.i18n().load(&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="string">'en'</span>: &#123;</span></span><br><span class="line"><span class="javascript">                        <span class="string">'welcome'</span>: <span class="string">'Welcome!'</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="string">'message_from'</span>: <span class="string">'$1 has send you $2 &#123;&#123;plural:$2|message|messages&#125;&#125;. &#123;&#123;gender:$3|He|She&#125;&#125; is waiting for your response!'</span></span></span><br><span class="line"><span class="undefined">                    &#125;,</span></span><br><span class="line"><span class="javascript">                    <span class="string">'ru'</span>: &#123;</span></span><br><span class="line"><span class="javascript">                        <span class="string">'welcome'</span>: <span class="string">'Ð”Ð¾Ð±Ñ€Ð¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°Ñ‚ÑŒ!'</span>,</span></span><br><span class="line"><span class="javascript">                        <span class="string">'message_from'</span>: <span class="string">'$1 &#123;&#123;gender:$3|Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ð»|Ð¾Ñ‚Ð¿Ñ€Ð°Ð²Ð¸Ð»Ð°&#125;&#125; Ð²Ð°Ð¼ $2 &#123;&#123;plural:$2|ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ðµ|ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹|ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ñ&#125;&#125;. &#123;&#123;gender:$3|ÐžÐ½|ÐžÐ½Ð°&#125;&#125; Ð¶Ð´Ñ‘Ñ‚ Ð¾Ñ‚Ð²ÐµÑ‚Ð°!'</span></span></span><br><span class="line"><span class="undefined">                    &#125;</span></span><br><span class="line"><span class="undefined">                &#125;);</span></span><br><span class="line"><span class="undefined">                update_texts();</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 点击切换语言</span></span></span><br><span class="line"><span class="javascript">                $(<span class="string">'.lang-switch'</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">                    e.preventDefault();</span></span><br><span class="line"><span class="javascript">                    $.i18n().locale = $(<span class="keyword">this</span>).data(<span class="string">'locale'</span>);</span></span><br><span class="line"><span class="undefined">                    update_texts();</span></span><br><span class="line"><span class="undefined">                &#125;);</span></span><br><span class="line"><span class="undefined">            &#125;);</span></span><br><span class="line"><span class="undefined">        </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-Polyglot-js"><a href="#3-Polyglot-js" class="headerlink" title="3. Polyglot.js"></a>3. Polyglot.js</h3><p><a href="https://github.com/airbnb/polyglot.js" target="_blank" rel="noopener">polyglot</a>，体积小，用法如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置所有的字符串</span></span><br><span class="line">polyglot.extend(&#123;</span><br><span class="line">    <span class="comment">// pluralization</span></span><br><span class="line">    <span class="string">"num_cars"</span>: <span class="string">"%&#123;smart_count&#125; car |||| %&#123;smart_count&#125; cars"</span>,</span><br><span class="line">    <span class="string">"hello"</span>: <span class="string">"Hello"</span>,</span><br><span class="line">    <span class="string">"hello_name"</span>: <span class="string">"Hello, %&#123;name&#125;."</span></span><br><span class="line">    <span class="string">"nav"</span>: &#123;</span><br><span class="line">        <span class="string">"sidebar"</span>: &#123;</span><br><span class="line">            <span class="string">"welcome"</span>: <span class="string">"Welcome"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 取字符串</span></span><br><span class="line">polyglot.t(<span class="string">"hello_name"</span>, &#123;<span class="attr">name</span>: <span class="string">"John"</span>&#125;);</span><br><span class="line">polyglot.t(<span class="string">"nav.sidebar.welcome"</span>);</span><br><span class="line">polyglot.locale(<span class="string">"de"</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"polyglot/polyglot.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"polyglot/main-polyglot.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"common/jquery.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"common/underscore.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/template"</span> <span class="attr">id</span>=<span class="string">"main-content"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">hello</span> %&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">   <span class="tag">&lt;<span class="name">small</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">unread</span> %&gt;</span><span class="tag">&lt;/<span class="name">small</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"> jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> polyglot = <span class="keyword">new</span> Polyglot(&#123;</span></span><br><span class="line"><span class="undefined">        phrases: &#123;</span></span><br><span class="line"><span class="javascript">            <span class="string">"hello"</span>: <span class="string">"Hello, %&#123;name&#125;!"</span>,</span></span><br><span class="line"><span class="javascript">            <span class="string">"unread"</span>: <span class="string">"You have %&#123;smart_count&#125; unread message |||| You have %&#123;smart_count&#125; unread messages"</span></span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> main_content_temp = _.template($(<span class="string">'#main-content'</span>).html());</span></span><br><span class="line"><span class="javascript">    $(<span class="string">'body'</span>).prepend(main_content_temp(&#123;</span></span><br><span class="line"><span class="javascript">        hello: polyglot.t(<span class="string">'hello'</span>, &#123;<span class="attr">name</span>: <span class="string">'John'</span>&#125;),</span></span><br><span class="line"><span class="javascript">        unread: polyglot.t(<span class="string">'unread'</span>, &#123;<span class="attr">smart_count</span>: <span class="number">2</span>&#125;)</span></span><br><span class="line"><span class="undefined">    &#125;));</span></span><br><span class="line"><span class="undefined">&#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="4-Globalize-js"><a href="#4-Globalize-js" class="headerlink" title="4. Globalize.js"></a>4. Globalize.js</h3><p><a href="https://github.com/globalizejs/globalize" target="_blank" rel="noopener">globalize.js</a>，实例如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">id</span>=<span class="string">"welcome"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"earnings"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        jQuery(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// step 1</span></span></span><br><span class="line"><span class="undefined">            Globalize.loadMessages(&#123;</span></span><br><span class="line"><span class="javascript">                <span class="string">"en"</span>: &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="string">'welcome'</span>: <span class="string">'Welcome, &#123;name&#125;!'</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="string">'welcome_0'</span>: <span class="string">'Welcome, &#123;0&#125;!'</span>,</span></span><br><span class="line"><span class="javascript">                    <span class="string">'earned'</span>: <span class="string">'Today is &#123;date&#125; and you\'ve earned &#123;amount&#125;!'</span></span></span><br><span class="line"><span class="undefined">                &#125;</span></span><br><span class="line"><span class="undefined">            &#125;);</span></span><br><span class="line"><span class="javascript">            <span class="comment">// step 2</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> globalize = <span class="keyword">new</span> Globalize(<span class="string">"en"</span>);</span></span><br><span class="line"><span class="javascript">            <span class="comment">// step 3</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> welcome_message = globalize.messageFormatter(<span class="string">'welcome'</span>);</span></span><br><span class="line"><span class="javascript">            $(<span class="string">'#welcome'</span>).text( welcome_message(&#123;<span class="attr">name</span>: <span class="string">'John'</span>&#125;) );</span></span><br><span class="line"><span class="javascript">            $(<span class="string">'#earnings'</span>).text(</span></span><br><span class="line"><span class="javascript">                globalize.messageFormatter(<span class="string">'earned'</span>)(&#123;</span></span><br><span class="line"><span class="javascript">                    amount: globalize.formatCurrency(<span class="number">500.5</span>, <span class="string">'USD'</span>),</span></span><br><span class="line"><span class="javascript">                    date: globalize.formatDate( <span class="keyword">new</span> <span class="built_in">Date</span>(), &#123;</span></span><br><span class="line"><span class="javascript">                        datetime: <span class="string">"medium"</span></span></span><br><span class="line"><span class="undefined">                    &#125;)</span></span><br><span class="line"><span class="undefined">                &#125;)</span></span><br><span class="line"><span class="undefined">            )</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> ...</span><br></pre></td></tr></table></figure></p>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>部分库会提供对一些特定类型字符串(<code>时间日期格式、金钱格式、长度单位等</code>)进行转换的功能，体积就会大一点，，如<code>format.js</code>、<code>globalize.js</code>，小一点的库<code>polyglot.js</code>、<code>jquery.i18n</code>则没有这种功能。根据我们项目的需求，个人还是比较倾向于<code>globalize.js</code>，插件功能比较丰富一点，兼容性比较好，功能插件化，用不到不需要引入，用得到时候可以快速拿过来使用。</p>
+<h5 id="需要注意的是："><a href="#需要注意的是：" class="headerlink" title="需要注意的是："></a>需要注意的是：</h5><ol>
+<li>几乎所有的框架使用的字符串模板格式都参考了<a href="http://userguide.icu-project.org/formatparse/messages" target="_blank" rel="noopener">ICU Message</a>语法。</li>
+<li>不管你使用哪种库，都需要你事先准备好翻译好的所有文字信息，框架<code>不会</code>自动帮你翻译。</li>
+</ol>
+<h5 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h5><ol>
+<li><a href="https://marcoscaceres.github.io/jsi18n/" target="_blank" rel="noopener">https://marcoscaceres.github.io/jsi18n/</a></li>
+<li><a href="https://phraseapp.com/blog/posts/step-step-guide-javascript-localization/" target="_blank" rel="noopener">https://phraseapp.com/blog/posts/step-step-guide-javascript-localization/</a></li>
+<li><a href="https://tools.ietf.org/html/bcp47" target="_blank" rel="noopener">https://tools.ietf.org/html/bcp47</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/js框架/" rel="tag"># js框架</a>
+          
+            <a href="/blog/tags/locales/" rel="tag"># locales</a>
+          
+            <a href="/blog/tags/国际化/" rel="tag"># 国际化</a>
+          
+            <a href="/blog/tags/多语言/" rel="tag"># 多语言</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/02/28/React条件渲染组件: rc-if-else/" rel="next" title="React条件渲染组件:rc-if-else">
+                <i class="fa fa-chevron-left"></i> React条件渲染组件:rc-if-else
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/05/14/测试你的前端代码一(介绍)/" rel="prev" title="测试你的前端代码一(介绍)">
+                测试你的前端代码一(介绍) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.gif" alt="Qin YuanBin">
+          <p class="site-author-name" itemprop="name">Qin YuanBin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinyuanbin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:a591737386@163.com?subject=xxx%E8%87%B4%E6%9C%89%E6%AF%92%E5%8D%9A%E4%B8%BB%E7%9A%84%E4%B8%80%E5%B0%81%E4%BF%A1&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%8D%9A%E4%B8%BB%EF%BC%9A%0A%0A%09%E6%88%91%E5%9C%A8%E6%9C%89%E6%AF%92%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%9C%8B%E5%88%B0%E4%BD%A0%E7%9A%84%E6%96%87%E7%AB%A0%E3%80%8Axxx%E3%80%8B%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E6%83%B3%E8%A6%81%E9%97%AE%E4%BD%A0..." target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Locales"><span class="nav-number">1.</span> <span class="nav-text">一、Locales</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、判断用户需要什么语言"><span class="nav-number">2.</span> <span class="nav-text">二、判断用户需要什么语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、框架"><span class="nav-number">3.</span> <span class="nav-text">三、框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-format-js-and-window-intl"><span class="nav-number">3.1.</span> <span class="nav-text">1. format.js and window.intl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-jQuery-I18n-js"><span class="nav-number">3.2.</span> <span class="nav-text">2. jQuery.I18n.js</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单个语言的配置文件："><span class="nav-number">3.2.1.</span> <span class="nav-text">单个语言的配置文件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多个语言的放在一起的配置文件："><span class="nav-number">3.2.2.</span> <span class="nav-text">多个语言的放在一起的配置文件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#demo："><span class="nav-number">3.2.3.</span> <span class="nav-text">demo：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Polyglot-js"><span class="nav-number">3.3.</span> <span class="nav-text">3. Polyglot.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Globalize-js"><span class="nav-number">3.4.</span> <span class="nav-text">4. Globalize.js</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、总结"><span class="nav-number">4.</span> <span class="nav-text">四、总结</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#需要注意的是："><span class="nav-number">4.0.0.1.</span> <span class="nav-text">需要注意的是：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#参考链接"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin YuanBin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/blog/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+
+</body>
+</html>
