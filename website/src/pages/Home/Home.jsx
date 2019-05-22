@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { primary } from '~/styles/theme';
-import createPage from '~/helpers/createPage';
+import { primary } from '../../styles/theme';
+import pageGenerator from '../../pageGenerator';
+
+import avatarUrl from '../../assets/images/avatar.jpg';
 
 const StyledSection = styled.section`
     min-width: 840px;
@@ -23,7 +25,7 @@ const Avatar = styled.div`
     border-radius: 50%;
     border: 10px solid #ffffff;
     box-shadow: 0 2px 5px #eeeeee;
-    background: url(/static/img/avatar.jpg) no-repeat left top;
+    background: url(${avatarUrl}) no-repeat left top;
     background-size: cover;
 `;
 
@@ -31,7 +33,7 @@ class Index extends React.Component {
     render() {
         return (
             <StyledSection>
-                <Avatar></Avatar>
+                <Avatar />
                 <Title>Qin YuanBin</Title>
                 <a href="/blog/">我的博客</a>
             </StyledSection>
@@ -39,4 +41,4 @@ class Index extends React.Component {
     }
 }
 
-export default createPage(Index);
+export default pageGenerator(Index);

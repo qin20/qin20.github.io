@@ -1,0 +1,113 @@
+---
+extends:
+    - eslint:recommended
+    - plugin:react/recommended
+    - airbnb
+plugins:
+    - import
+settings:
+    react:
+        version: ^16.7.0
+    import/resolver:
+        webpack:
+            config: scripts/webpack.config.base.js
+parser: babel-eslint
+globals:
+    pjcx: true
+env:
+    browser: true
+    node: true
+parserOptions:
+    ecmaVersion: 6
+    sourceType: module
+    experimentalObjectRestSpread: true
+    ecmaFeatures:
+        jsx: true
+        modules: true
+rules:
+    indent:
+        - error
+        - 4
+    no-bitwise:
+        - off
+    no-plusplus:
+        - off
+    camelcase:
+        - error
+        -
+            properties: never
+            allow:
+                - ^UNSAFE_
+    prefer-destructuring:
+        - error
+        -
+            VariableDeclarator:
+                array: false
+                object: true
+            AssignmentExpression:
+                array: false
+                object: false
+    object-curly-newline:
+        - error
+        -
+            ObjectExpression:
+                multiline: true
+                minProperties: 9
+                consistent: true
+            ObjectPattern:
+                multiline: true
+                minProperties: 9
+                consistent: true
+            ImportDeclaration:
+                multiline: true
+                minProperties: 5
+                consistent: true
+            ExportDeclaration:
+                multiline: true
+                minProperties: 5
+                consistent: true
+
+    # react plugin
+    react/prop-types:
+        - error
+        - skipUndeclared: true
+    react/jsx-indent:
+        - error
+        - 4
+    react/jsx-indent-props:
+        - error
+        - 4
+    react/destructuring-assignment:
+        - off
+    react/display-name:
+        - off
+    react/no-find-dom-node:
+        - off
+    react/no-unescaped-entities:
+        - error
+        -
+            forbid:
+                -
+                    char: >
+                    alternatives: ['&gt;']
+                -
+                    char: \}
+                    alternatives: ['&#125;']
+                -
+                    char: \'
+                    alternatives: ['&apos;']
+                -
+                    char: \"
+                    alternatives: ['&quot;']
+
+    #import plugin
+    import/prefer-default-export:
+        - off
+
+    # jsx-a11y
+    jsx-a11y/click-events-have-key-events:
+        - off
+    jsx-a11y/no-static-element-interactions:
+        - off
+    jsx-a11y/no-noninteractive-element-interactions:
+        - off

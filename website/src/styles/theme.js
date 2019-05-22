@@ -1,4 +1,4 @@
-import themer from '~/helpers/themer';
+import themer from '../helpers//themer';
 import { css } from 'styled-components';
 
 // colors
@@ -10,15 +10,15 @@ export const red = 'red';
 
 // theme
 export const primary = themer({
-    default: blueDark
+    default: blueDark,
 });
 
 export const danger = themer({
-    default: red
+    default: red,
 });
 
 export const borderMain = themer({
-    default: grayLight
+    default: grayLight,
 });
 
 export const panel = themer({
@@ -29,5 +29,5 @@ export const panel = themer({
     red: css`
         color: ${white};
         background: ${blueDark};
-    `
+    `,
 });
