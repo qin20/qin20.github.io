@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/blog/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Javascript,Testing,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/blog/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="端到端测试在第二部分，我们看到测试的其中一种——单元测试。我们对应用的核心逻辑进行了测试——calculator模块——使用到了mocha框架并编写了测试代码。 在这一部分，我们将看到测试的另一种——E2E测试，我们将会从用户的角度来看待并测试整个应用。 在我们的app中，整个应用就只有前端代码，它不需要也没有后端的支持，所以我们要做的E2E测试就是要在浏览器下打开我们的应用，并且模拟一系列用户使">
+<meta name="keywords" content="Javascript,Testing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端代码测试三(E2E测试)">
+<meta property="og:url" content="https://qinyuanbin.github.io/2019/05/28/前端代码测试三-E2E测试/index.html">
+<meta property="og:site_name" content="&lt;span style=&#39;padding: 0 0.8em;&#39;&gt;Q &amp; P&lt;&#x2F;span&gt;">
+<meta property="og:description" content="端到端测试在第二部分，我们看到测试的其中一种——单元测试。我们对应用的核心逻辑进行了测试——calculator模块——使用到了mocha框架并编写了测试代码。 在这一部分，我们将看到测试的另一种——E2E测试，我们将会从用户的角度来看待并测试整个应用。 在我们的app中，整个应用就只有前端代码，它不需要也没有后端的支持，所以我们要做的E2E测试就是要在浏览器下打开我们的应用，并且模拟一系列用户使">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*JSF-szgDnH4GiiFBmbEdQQ.png">
+<meta property="og:image" content="https://cdn-images-1.medium.com/max/800/1*P8zOYNoxd1m-K29Eu9gJ-Q.png">
+<meta property="og:updated_time" content="2019-05-28T12:57:49.430Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端代码测试三(E2E测试)">
+<meta name="twitter:description" content="端到端测试在第二部分，我们看到测试的其中一种——单元测试。我们对应用的核心逻辑进行了测试——calculator模块——使用到了mocha框架并编写了测试代码。 在这一部分，我们将看到测试的另一种——E2E测试，我们将会从用户的角度来看待并测试整个应用。 在我们的app中，整个应用就只有前端代码，它不需要也没有后端的支持，所以我们要做的E2E测试就是要在浏览器下打开我们的应用，并且模拟一系列用户使">
+<meta name="twitter:image" content="https://cdn-images-1.medium.com/max/800/1*JSF-szgDnH4GiiFBmbEdQQ.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://qinyuanbin.github.io/2019/05/28/前端代码测试三-E2E测试/">
+
+
+
+
+
+  <title>前端代码测试三(E2E测试) | <span style="padding: 0 0.8em;">Q & P</span></title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title"><span style="padding: 0 0.8em;">Q & P</span></span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一个想做游戏和写书的前端打字人员</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blog/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blog/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blog/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://qinyuanbin.github.io/blog/2019/05/28/前端代码测试三-E2E测试/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qin YuanBin">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="<span style='padding: 0 0.8em;'>Q & P</span>">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端代码测试三(E2E测试)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-28T14:46:23+08:00">
+                2019-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="端到端测试"><a href="#端到端测试" class="headerlink" title="端到端测试"></a>端到端测试</h2><p>在第二部分，我们看到测试的其中一种——单元测试。我们对应用的核心逻辑进行了测试——calculator模块——使用到了mocha框架并编写了测试代码。</p>
+<p>在这一部分，我们将看到测试的另一种——E2E测试，我们将会从用户的角度来看待并测试整个应用。</p>
+<p>在我们的app中，整个应用就只有前端代码，它不需要也没有后端的支持，所以我们要做的E2E测试就是要在浏览器下打开我们的应用，并且模拟一系列用户使用键盘来计算结果的行为，并且校验计算器显示的结果和我们的预期是否一致。</p>
+<p>说到这里，五岁能抬头的小伙伴们肯定都有一个疑问，使用键盘的行为用排列组合来算的话数量非常巨大，我们是否要像单元测试那样，需要覆盖所有的场景和可能性呢？答案是，No！我们在单元测试中已经确保这些。我们在E2E中做的不是单个单元中做的事情，而是多个或者全部单元一起工作的时候是否正常。</p>
+<h2 id="需要写多少的E2E测试"><a href="#需要写多少的E2E测试" class="headerlink" title="需要写多少的E2E测试"></a>需要写多少的E2E测试</h2><p>这里有一个为什么不应该写太多E2E测试的原因——如果我们已经在单元测试和交互测试中测试了，我们可能已经确保了所有的可能性都是正确的。E2E测试需且仅需确保所有的单元一起工作的时候正常就行了。</p>
+<p>还有两外两个原因为什么我们不需要太多的E2E测试，第一个就是因为这些测试非常的慢。如果你有上百个这种测试用例，就像你的单元测试或者交互测试中这么多德话，意味着跑完你的测试需要大量的时间，但是别忘记了——测试应该要快。</p>
+<p>不需要太多E2E测试的最后一个原因就是这些测试都是不可靠的。不可靠的测试是有时候可以通过，有时候又不可以通过。这在单元测试中是不可能发生的，因为它们很简单，输入——计算——输出，几乎只需要cpu就可以完成。但是一个测试越是与I/O相关（I/O指的是那种不仅仅是CPU或者内存驱动的），它越是不可靠。如何减少测试的不可靠性？对的，就是减少数量到一个你认为可以接受的程度。那我们可以写出完全可靠的E2E测试吗？可能吧，但是我从来没有见过。</p>
+<h2 id="编写前端的E2E测试"><a href="#编写前端的E2E测试" class="headerlink" title="编写前端的E2E测试"></a>编写前端的E2E测试</h2><p>好了，让我们开始编写E2E测试代码吧。我们的测试需要准备做两件事情：1 - 一个浏览器，2 - 一个web服务器用来serve我们的前端页面。</p>
+<p>由于我们用了mocha这个框架来做E2E测试，跟我们的单元测试一样，我们首先要打开浏览器和启动web服务器，我们在mocha的before钩子里面去做，然后在after钩子里面关闭浏览器和web服务器。这两个钩子在分别在所有测试之前和之后运行，一般用于初始化一些测试所需的条件。</p>
+<p>让我们先来做第一个事情：启动web服务器。</p>
+<h2 id="在mocha中启动web服务器"><a href="#在mocha中启动web服务器" class="headerlink" title="在mocha中启动web服务器"></a>在mocha中启动web服务器</h2><p>一个Nodejs的web服务器？长得帅的人马上就会想到express，所以我就不多废话了，直接上代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> server</span><br><span class="line"></span><br><span class="line">before(<span class="function">(<span class="params">done</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> app = express()</span><br><span class="line">    app.use(<span class="string">'/'</span>, express.static(path.resolve(__dirname, <span class="string">'../../dist'</span>)))</span><br><span class="line">    server = app.listen(<span class="number">8080</span>, done)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">after(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    server.close()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在这一步，在before的钩子里，我们创建了一个express应用，然后把它指向目录dist，监听8080端口。最后在after钩子里面关闭这个服务器。</p>
+<p>这个dist是什么呢？简单来说就是放置我们js打包后的代码（我们用的webpack打包），然后在把我们的HTML和CSS放进去的目录。你们看一下package.json里面的npm build指令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"frontend-testing"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"webpack &amp;&amp; cp public/* dist"</span>,</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"mocha 'test/**/test-*.js' &amp;&amp; eslint test lib"</span>,</span><br><span class="line">...</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>这就是说我需要先npm run build，然后在才可以继续e2e的测试。是不是有点不太方便？我们在单元测试的时候并不需要去打包因为单元测试运行在node环境下，不需要编译或者打包。</p>
+<p>为了更好的理解这个，我们看一下webpack.config.js里面是如何进行打包的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./lib/app.js'</span>,</span><br><span class="line">  output: &#123;</span><br><span class="line">    filename: <span class="string">'bundle.js'</span>,</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>webpack会先读取我们的app.js文件，然后把这个文件所有的依赖都递归的打包成bundle.js文件，然后放入dist文件夹。</p>
+<p>dist文件夹也就是生产环境文件夹，就正如你在E2E测试里所看到的一样。这个非常重要——E2E测试运行的环境与生产环境要尽可能一致。</p>
+<h2 id="Mocha中模拟一个浏览器"><a href="#Mocha中模拟一个浏览器" class="headerlink" title="Mocha中模拟一个浏览器"></a>Mocha中模拟一个浏览器</h2><p>现在我们的服务器起好了，我们的代码也可以通过服务器访问了，剩下的事情就是启动一个浏览器然后运行我们的代码了。我们要用什么框架来做浏览器的自动化呢。我用的最多的是selenium-webdriver，因为它比较流行。</p>
+<p>首先，在深入了解之前，我们先简单的看一下如果使用这个driver：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;prepareDriver, cleanupDriver&#125; = <span class="built_in">require</span>(<span class="string">'../utils/browser-automation'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">describe(<span class="string">'calculator app'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> driver</span><br><span class="line">  ...</span><br><span class="line">  before(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    driver = <span class="keyword">await</span> prepareDriver()</span><br><span class="line">  &#125;)</span><br><span class="line">  after(<span class="function"><span class="params">()</span> =&gt;</span> cleanupDriver(driver))</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should work'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">await</span> driver.get(<span class="string">'http://localhost:8080'</span>)</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>在before钩子里，我们初始化好一个driver，在after钩子里面，我们销毁这个driver。初始化一个driver将会打开一个浏览器（Chrome，需要等一会），销毁这个driver浏览器就会被关闭。需要注意的是初始化一个driver是异步的，它返回一个promise对象，我们可以用async/await功能来使我们的代码更加美观。（好消息，自从Node 7.7版本起，Node开始原生支持async/await功能！）</p>
+<p>最后，我们在测试用例里面，我们用浏览器打开网址<a href="http://localhost:8080，这里依然要使用await，因为driver.get方法也是异步的。" target="_blank" rel="noopener">http://localhost:8080，这里依然要使用await，因为driver.get方法也是异步的。</a></p>
+<p>我们来看看的prepareDriver和cleanupDriver的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webdriver = <span class="built_in">require</span>(<span class="string">'selenium-webdriver'</span>)</span><br><span class="line"><span class="keyword">const</span> chromeDriver = <span class="built_in">require</span>(<span class="string">'chromedriver'</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chromeDriverPathAddition = <span class="string">`:<span class="subst">$&#123;path.dirname(chromeDriver.path)&#125;</span>`</span></span><br><span class="line"></span><br><span class="line">exports.prepareDriver = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  process.on(<span class="string">'beforeExit'</span>, () =&gt; <span class="keyword">this</span>.browser &amp;&amp; <span class="keyword">this</span>.browser.quit())</span><br><span class="line">  process.env.PATH += chromeDriverPathAddition</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">new</span> webdriver.Builder()</span><br><span class="line">    .disableEnvironmentOverrides()</span><br><span class="line">    .forBrowser(<span class="string">'chrome'</span>)</span><br><span class="line">    .setLoggingPrefs(&#123;<span class="attr">browser</span>: <span class="string">'ALL'</span>, <span class="attr">driver</span>: <span class="string">'ALL'</span>&#125;)</span><br><span class="line">    .build()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">exports.cleanupDriver = <span class="keyword">async</span> (driver) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (driver) &#123;</span><br><span class="line">    driver.quit()</span><br><span class="line">  &#125;</span><br><span class="line">  process.env.PATH = process.env.PATH.replace(chromeDriverPathAddition, <span class="string">''</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个代码写出来并不容易（这个代码我只考虑在Unix系统下运行，如果有谁想支持windows，欢迎提pr），我查阅了Google/Stack Overflow/webdriver等的文档，然后经过自己的各种尝试修改，终于运行成功了。</p>
+<p>从理论上说，你可以直接复制/粘贴到你的代码里面，不需要理解，但是我们还是要深入解析它的原理。</p>
+<p>前两行代码引入了webdriver，相当于浏览器driver。Selenium webdriver的工作原理就是通过一个API可以调用各种各样的浏览器，它依赖于浏览器driver来调用浏览器。我们这里用到的浏览器driver就是chromedriver，可见于代码第二行。</p>
+<p>chrome driver不需要你在电脑上打开一个chrome —— 其实它会安装一个Chrome执行命令启动器当你npm install的时候。很惭愧，有一个东西我没有找到原因，就是chromedriver文件夹必须需要添加的path环境变量里（相当于windows的环境变量），我们在第九行代码做了这个件事。当然，我也会在clearup的时候去删除这个path，可见于代码22行。</p>
+<p>到这里我们就初始化好了browser driver，接下应该初始化web driver了——可见于11-15行代码。由于这一步是异步的并且返回了一个promise对象，我们使用await来处理。</p>
+<h2 id="测试-测试"><a href="#测试-测试" class="headerlink" title="测试~测试~"></a>测试~测试~</h2><p>准备工作完毕——是时候用它们来做一些测试了。</p>
+<p>测试的所有代码在这里。但是让我们来一步步深入，因为这些测试有点难以理解。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">const</span> retry = <span class="built_in">require</span>(<span class="string">'promise-retry'</span>)</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  it(<span class="string">'should work'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">await</span> driver.get(<span class="string">'http://localhost:8080'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> retry(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> title = <span class="keyword">await</span> driver.getTitle()</span><br><span class="line"></span><br><span class="line">      expect(title).to.equal(<span class="string">'Calculator'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+<p>我省略了初始化的代码，这样我们看起来会更加清晰，也更加可以集中在我们的测试代码上。</p>
+<p>上面的代码打开了我们的计算器app，并且检测了网页的标题title为“Calculator”，我们一行行讲解：</p>
+<p>第一行——我们打开了app网址。别忘记了await。</p>
+<p>然后直接看第九行，在这里，我们要求浏览器返回它的title（异步的操作记得await），然后接下来第十行，我们检测标题是否正确。</p>
+<p>但是我们为什么要用promise-retry模块呢？原因非常重要，我们在接下来的测试中也会有这个问题——当我们调用浏览器去做某件事情的时候，例如打开一个网页，浏览器会照做，但是是异步的。别让await迷惑了你。我们在等待浏览器回应——这件事我做好了，这样程序就相当于暂停了。</p>
+<p>不幸的是，如果你没有在这里retry，程序运行也有可能正常，因为浏览器响应非常快。但是你可以尝试在一个很卡的环境中运行，例如travis，就像我之前尝试的那样，你可能会得到一个错误，因为CI-s一般都会比你的系统慢一点点。</p>
+<p>这就是为什么浏览器的E2E测试，我们要retry我们的检查。</p>
+<h2 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h2><p>继续我们的测试！</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;By&#125; = <span class="built_in">require</span>(<span class="string">'selenium-webdriver'</span>)</span><br><span class="line">  it(<span class="string">'should work'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">await</span> driver.get(<span class="string">'http://localhost:8080'</span>)</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> retry(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> displayElement = <span class="keyword">await</span> driver.findElement(By.css(<span class="string">'.display'</span>))</span><br><span class="line">      <span class="keyword">const</span> displayText = <span class="keyword">await</span> displayElement.getText()</span><br><span class="line"></span><br><span class="line">      expect(displayText).to.equal(<span class="string">'0'</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+<p>接下来我们要测试的是，最初的状态，显示的值为“0”。为了去做这个事情，我们要先找到显示这个值的，有一个classname为’display’的元素。在代码第七行，webdriver去查找这个元素。我们也可以通过By.id来查找，或者通过By.css，或者其他的API。我通常使用By.css——它接受一个选择器作为参数的用法非常友好，虽然By.javascript看起来更加友好。</p>
+<p>如果你没有注意，我就说一下，By是在第一行引入的。</p>
+<p>当我们查找到这个元素，我们使用getText()（你可以使用其他的）方法来获取text，然后检查它是否正确。可见于第十行。别忘记await！<br><img src="https://cdn-images-1.medium.com/max/800/1*JSF-szgDnH4GiiFBmbEdQQ.png" alt="(Thanks to http://www.memeking.co.il/)"></p>
+<h2 id="driving-the-UI"><a href="#driving-the-UI" class="headerlink" title="driving the UI"></a>driving the UI</h2><p>是时候来驱动一下我们的应用了——点击一写数字和运算符，然后检查计算的结果是否正确。</p>
+<p>There we go —— 先找到需要点击的元素，可见于行2-4。然后点击他们，行6-7（输入的是”42*2=”）</p>
+<p>然后retry知道我们的得到正确的计算结果 —— “84”。</p>
+<h2 id="运行我们的测试用例"><a href="#运行我们的测试用例" class="headerlink" title="运行我们的测试用例"></a>运行我们的测试用例</h2><p>我们现在有了E2E测试，单元测试，让我们运行一个npm test命令。<br><img src="https://cdn-images-1.medium.com/max/800/1*P8zOYNoxd1m-K29Eu9gJ-Q.png" alt="Running E2E and unit tests together"></p>
+<p>恭喜兄弟，你绿了！</p>
+<h2 id="关于await的一些话"><a href="#关于await的一些话" class="headerlink" title="关于await的一些话"></a>关于await的一些话</h2><p>如果你看过很多网上的例子，你会发现他们并没有使用async/await，或者甚至直接使用promise回调。No！他们写的是同步的代码。这是怎么回事？实话说，我不知道，但是看起来在webdriver的使用上非常的奇怪。就像selenium曾经说的那样，这只是一个过渡阶段的解决方案，直到Node支持async和await。</p>
+<p>然后现在你懂得。。</p>
+<h2 id="关于文档的一些话"><a href="#关于文档的一些话" class="headerlink" title="关于文档的一些话"></a>关于文档的一些话</h2><p>Selenium的文档真的是。。。够java的。这并不是赞扬。换句话说，还能忍受。你如果去看，你就知道了。</p>
+<h2 id="下一周"><a href="#下一周" class="headerlink" title="下一周"></a>下一周</h2><p>我们又学习了一种新的测试，下一周，我们将会讲解集成测试。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这一周知识点</p>
+<ul>
+<li>我们写了一些粗浅的代码，用来初始化浏览器。幸运的是，我们只需要写一次。</li>
+<li>我们学习了怎么使用webdriver API去驱动浏览器并获取元素和他们的值。</li>
+<li>我们使用了async/await，记得所有的webdriver API都是异步的promise。</li>
+<li>我们讲解了为什么E2E测试需要使用retry。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blog/tags/Javascript/" rel="tag"># Javascript</a>
+          
+            <a href="/blog/tags/Testing/" rel="tag"># Testing</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/2019/05/20/前端代码测试二-单元测试/" rel="next" title="前端代码测试二(单元测试)">
+                <i class="fa fa-chevron-left"></i> 前端代码测试二(单元测试)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/2019/06/17/设计模式心得（持续更新）/" rel="prev" title="设计模式心得（持续更新）">
+                设计模式心得（持续更新） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/blog/images/avatar.gif" alt="Qin YuanBin">
+          <p class="site-author-name" itemprop="name">Qin YuanBin</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/blog/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/qinyuanbin" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:a591737386@163.com?subject=xxx%E8%87%B4%E6%9C%89%E6%AF%92%E5%8D%9A%E4%B8%BB%E7%9A%84%E4%B8%80%E5%B0%81%E4%BF%A1&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E5%8D%9A%E4%B8%BB%EF%BC%9A%0A%0A%09%E6%88%91%E5%9C%A8%E6%9C%89%E6%AF%92%E7%9A%84%E5%8D%9A%E5%AE%A2%E7%9C%8B%E5%88%B0%E4%BD%A0%E7%9A%84%E6%96%87%E7%AB%A0%E3%80%8Axxx%E3%80%8B%EF%BC%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E9%97%AE%E9%A2%98%E6%83%B3%E8%A6%81%E9%97%AE%E4%BD%A0..." target="_blank" title="E-Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                    
+                      E-Mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#端到端测试"><span class="nav-number">1.</span> <span class="nav-text">端到端测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要写多少的E2E测试"><span class="nav-number">2.</span> <span class="nav-text">需要写多少的E2E测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写前端的E2E测试"><span class="nav-number">3.</span> <span class="nav-text">编写前端的E2E测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在mocha中启动web服务器"><span class="nav-number">4.</span> <span class="nav-text">在mocha中启动web服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mocha中模拟一个浏览器"><span class="nav-number">5.</span> <span class="nav-text">Mocha中模拟一个浏览器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试-测试"><span class="nav-number">6.</span> <span class="nav-text">测试~测试~</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找元素"><span class="nav-number">7.</span> <span class="nav-text">查找元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#driving-the-UI"><span class="nav-number">8.</span> <span class="nav-text">driving the UI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行我们的测试用例"><span class="nav-number">9.</span> <span class="nav-text">运行我们的测试用例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于await的一些话"><span class="nav-number">10.</span> <span class="nav-text">关于await的一些话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于文档的一些话"><span class="nav-number">11.</span> <span class="nav-text">关于文档的一些话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下一周"><span class="nav-number">12.</span> <span class="nav-text">下一周</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">13.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qin YuanBin</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/blog/js/src/js.cookie.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/blog/js/src/scroll-cookie.js?v=5.1.2"></script>
+
+
+  
+
+</body>
+</html>
